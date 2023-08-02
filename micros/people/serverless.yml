@@ -7,19 +7,14 @@ provider:
   runtime: nodejs18.x
   stage: ${opt:stage, 'test'}
   region: us-east-1
-  iam:
-    role:
-      managedPolicies:
-        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
-        - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+  iamManagedPolicies:
+    - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+    - arn:aws:iam::aws:policy/SecretsManagerReadWrite
   environment: ${file(configs.js)}
 
 package:
   individually: true
-  # patterns:
   exclude:
-    # - '!node_modules/**'
-    # - '!./**'
     - 'node_modules/**'
     - ./**
 
@@ -38,7 +33,6 @@ functions:
           method: get
           path: people/listPeople
     package:
-      # patterns:
       include:
         - './get-all-people/**'
         - './database.js'
@@ -56,10 +50,8 @@ functions:
           documentation: ${file(serverless.doc.yml):documentation.endpoints.createPerson}
     package:
       include:
-      # patterns:
         - './create-new-person/**'
         - './database.js'
-        # - './serverless.doc.yml'
         - './secret.js'
     layers:
       - ${cf:layers5-dev.Dependencias5LayerExport}
@@ -73,7 +65,6 @@ functions:
           path: people/listPeopleSWAPI
     package:
       include:
-      # patterns:
         - './get-people-swapi/**'
     layers:
       - ${cf:layers5-dev.Dependencias5LayerExport}
