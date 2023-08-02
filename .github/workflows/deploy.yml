@@ -30,9 +30,9 @@ jobs:
         run: echo -e "HOST=${{env.HOST}}\nUSER=${{env.nUSER}}\nBD=${{env.BD}}" > .env.local
         working-directory: ./micros/people
 
-      # - name: ~ Run tests ~
-      #   id: RunTests
-      #   run: npm test
+      - name: ~ Run tests ~
+        id: RunTests
+        run: npm test
 
       - name: ~ Generar openapi json ~
         id: GenerateOpenApiJson
