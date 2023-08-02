@@ -19,29 +19,29 @@ documentation:
         properties:
           nombre:
             type: string
-    - name: ResponseObjectListPeople
-      description: Respuesta listpeople
-      contentType: application/json
-      schema:
-        $schema: http://json-schema.org/draft-04/schema#
-        type: array
-        items:
-          type: "object"
-          properties:
-            id:
-              type: number
-            name:
-              type: string
-            birth_year:
-              type: string
-            eye_color:
-              type: string
-            gender:
-              type: string
-            hair_color:
-              type: string
-            skin_color:
-              type: string
+    # - name: ResponseObjectListPeople
+    #   description: Respuesta listpeople
+    #   contentType: application/json
+    #   schema:
+    #     $schema: http://json-schema.org/draft-04/schema#
+    #     type: array
+    #     items:
+    #       type: "object"
+    #       properties:
+    #         id:
+    #           type: number
+    #         name:
+    #           type: string
+    #         birth_year:
+    #           type: string
+    #         eye_color:
+    #           type: string
+    #         gender:
+    #           type: string
+    #         hair_color:
+    #           type: string
+    #         skin_color:
+    #           type: string
   endpoints:
     createPerson:
       summary: Crear personaje
@@ -56,12 +56,12 @@ documentation:
             description: "Mensaje de confirmación"
           responseModels:
             application/json: ResponseObject
-    listPeople:
-      summary: Listar personajes
-      description: Lista los personajes desde la BD
-      methodResponses:
-        - statusCode: 200
-          responseBody:
-            description: "Mensaje de confirmación"
-          responseModels:
-            application/json: ResponseObjectListPeople
+    # listPeople:
+    #   summary: Listar personajes
+    #   description: Lista los personajes desde la BD
+    #   methodResponses:
+    #     - statusCode: 200
+    #       responseBody:
+    #         description: "Mensaje de confirmación"
+    #       responseModels:
+    #         application/json: ResponseObjectListPeople
