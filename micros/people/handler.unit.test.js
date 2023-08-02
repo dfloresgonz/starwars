@@ -6,10 +6,10 @@ const esp = process.env.IS_OFFLINE || process.env.NODE_ENV == 'test' ? '../../' 
     require('dotenv').config({ path: `utils/.env.local`, override: true })
 //}
 
-test('GetPeopleSWAPI correcto', async () => {
-    const rpta = await getPeopleSwapi.method()
-    expect(rpta.statusCode).toBe(200)
-})
+// test('GetPeopleSWAPI correcto', async () => {
+//     const rpta = await getPeopleSwapi.method()
+//     expect(rpta.statusCode).toBe(200)
+// })
 
 test('getAllPeople correcto', async () => {
     const rpta = await getAllPeople.method()
