@@ -5,7 +5,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
   AWS_DEFAULT_REGION: us-east-1
-  # DEPLOY: true
   HOST_BD: ${{ vars.HOST_BD }}
   USER_BD: ${{ vars.USER_BD }}
   BD_NAME: ${{ vars.BD_NAME }}

@@ -1,10 +1,7 @@
 const getPeopleSwapi = require('./get-people-swapi/handler')
 const getAllPeople = require('./get-all-people/handler')
 const createPerson = require('./create-new-person/handler')
-const esp = process.env.IS_OFFLINE || process.env.NODE_ENV == 'test' ? '../../' : ''
-//if(!process.env.DEPLOY) {
-    require('dotenv').config({ path: `utils/.env.local`, override: true })
-//}
+require('dotenv').config({ path: `utils/.env.local`, override: true })
 
 test('GetPeopleSWAPI correcto', async () => {
     const rpta = await getPeopleSwapi.method()

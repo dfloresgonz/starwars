@@ -2,9 +2,11 @@
 
 Este es un ejemplo sencillo y muy básico que utiliza el framework Serverless, el patrón de arquitectura de microservicios, base de datos mysql, jest, github actions y AWS.
 
-## Ver video explicativo
+## Ver videos explicativos
 
-https://loom.com/video/sdfsdfsdfds
+- https://www.loom.com/embed/29e32240f24e4369b96b56d923432363
+
+- https://www.loom.com/embed/8081d62a06f845ca907394854ba4a35f
 
 ## Pre-requisitos
 

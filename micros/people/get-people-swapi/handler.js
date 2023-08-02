@@ -1,6 +1,6 @@
 'use strict'
 
-let response = {
+const response = {
     statusCode: 200,
     headers: {
         'Access-Control-Allow-Origin': '*',
