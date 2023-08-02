@@ -6,9 +6,9 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
   AWS_DEFAULT_REGION: us-east-1
   DEPLOY: true
-  HOST: ${{ secrets.HOST }}
-  USER: ${{ secrets.USER }}
-  BD  : ${{ secrets.BD }}
+  HOST: ${{ vars.HOST }}
+  USER: ${{ vars.USER }}
+  BD  : ${{ vars.BD }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -39,10 +39,10 @@ jobs:
         run: serverless openapi generate -o example_swagger_doc.json -f json
         working-directory: ./micros/people
 
-      # - name: ~ Subir openapi json s3 ~
-      #   id: UploadOpenApiJsonS3
-      #   run: aws s3 cp "./example_swagger_doc.json" ${{ env.BUCKET }}/docs
-      #   working-directory: ./micros/people
+      - name: ~ Subir openapi json s3 ~
+        id: UploadOpenApiJsonS3
+        run: aws s3 cp "./example_swagger_doc.json" ${{ env.BUCKET }}/docs
+        working-directory: ./micros/people
       
       # - name: ~ Deploy microservice ~
       #   id: DeployMS
