@@ -1,7 +1,5 @@
 service: starwars-backend-people
 
-# configValidationMode: error
-
 provider:
   name: aws
   runtime: nodejs18.x
