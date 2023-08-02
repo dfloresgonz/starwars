@@ -21,7 +21,6 @@ Funcionalidad que retorna el listado de personajes
 		"hair_color": "Blond",
 		"skin_color": "Fair"
 	},
-    ...
 ]
 ```
 

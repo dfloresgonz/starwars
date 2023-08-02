@@ -2,9 +2,9 @@ const mysql = require('mysql2/promise')
 const password = require('./secret')
 
 const config = {
-    host    : process.env.HOST,
-    user    : process.env.USER,
-    database: process.env.BD,
+    host    : process.env.HOST_BD,
+    user    : process.env.USER_BD,
+    database: process.env.BD_NAME,
     waitForConnections: true,
     connectionLimit: 10,
     maxIdle: 10,
