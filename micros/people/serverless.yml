@@ -8,7 +8,7 @@ provider:
   iamManagedPolicies:
     - arn:aws:iam::aws:policy/AWSLambda_FullAccess
     - arn:aws:iam::aws:policy/SecretsManagerReadWrite
-  environment: ${file(utils/configs.js)}
+  environment: ${file(./utils/configs.js)}
 
 package:
   individually: true
