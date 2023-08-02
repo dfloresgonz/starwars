@@ -1,0 +1,48 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "ResponseObject": {
+        "properties": {
+          "msj": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestObject": {
+        "properties": {
+          "nombre": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {}
+  },
+  "info": {
+    "title": "Starwars api",
+    "description": "API de starwars",
+    "version": "1"
+  },
+  "paths": {
+    "/people/createPerson": {
+      "post": {
+        "operationId": "createPerson",
+        "summary": "Crear personaje",
+        "description": "Crea un personaje nuevo en la BD.",
+        "responses": {
+          "200": {
+            "description": "Mensaje de confirmación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+documentation:
+  version: '1'
+  title: Starwars api
+  description: API de starwars
+  models:
+    - name: ResponseObject
+      description: PUT Document request model (inline example)
+      contentType: application/json
+      schema:
+        $schema: http://json-schema.org/draft-04/schema#
+        properties:
+          msj:
+            type: string
+    - name: RequestObject
+      description: RequestObject...
+      contentType: application/json
+      schema:
+        $schema: http://json-schema.org/draft-04/schema#
+        properties:
+          nombre:
+            type: string
+  endpoints:
+    createPerson:
+      summary: Crear personaje
+      description: Crea un personaje nuevo en la BD.
+      requestBody:
+        description: "Body param"
+      requestModels:
+        application/json: RequestObject
+      methodResponses:
+        - statusCode: 200
+          responseBody:
+            description: "Mensaje de confirmación"
+          responseModels:
+            application/json: ResponseObject

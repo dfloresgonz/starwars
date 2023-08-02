@@ -1,0 +1,91 @@
+service: starwars-backend-people
+
+# configValidationMode: error
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'test'}
+  region: us-east-1
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+  environment: ${file(configs.js)}
+
+package:
+  # individually: true
+  # patterns:
+  exclude:
+    # - '!node_modules/**'
+    # - '!./**'
+    - 'node_modules/**'
+    - '*'
+
+plugins:
+  # - serverless-openapi-integration-helper
+  - serverless-openapi-documentation
+
+# openApiIntegration:
+#   inputFile: schema.yml
+#   # package: true
+#   autoMock: true
+#   outputFile: api.yml #optional, defaults to api.yml
+  # mapping:
+  #   - path: ./
+  #     stage: [test]
+    # - path: mocks/customer.yml
+    #   stage: test
+
+custom:
+  documentation: ${file(serverless.doc.yml):documentation}
+
+functions:
+  listPeople:
+    handler: get-all-people/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: get
+          path: people/listPeople
+    package:
+      # patterns:
+      include:
+        - './get-all-people/**'
+        - './database.js'
+        - './secret.js'
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}
+  
+  createPerson:
+    handler: create-new-person/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: post
+          path: people/createPerson
+          documentation: ${file(serverless.doc.yml):documentation.endpoints.createPerson}
+    package:
+      include:
+      # patterns:
+        - './create-new-person/**'
+        - './database.js'
+        - './serverless.doc.yml'
+        - './secret.js'
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}
+
+  listPeopleSWAPI:
+    handler: get-people-swapi/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: get
+          path: people/listPeopleSWAPI
+    package:
+      include:
+      # patterns:
+        - './get-people-swapi/**'
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}
