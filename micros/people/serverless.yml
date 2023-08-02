@@ -21,7 +21,7 @@ package:
     # - '!node_modules/**'
     # - '!./**'
     - 'node_modules/**'
-    - '*'
+    - ./**
 
 plugins:
   - serverless-openapi-documentation
@@ -59,7 +59,7 @@ functions:
       # patterns:
         - './create-new-person/**'
         - './database.js'
-        - './serverless.doc.yml'
+        # - './serverless.doc.yml'
         - './secret.js'
     layers:
       - ${cf:layers5-dev.Dependencias5LayerExport}
