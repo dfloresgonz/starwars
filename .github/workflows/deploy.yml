@@ -39,11 +39,6 @@ jobs:
         id: RunTests
         run: npm test
 
-      - name: ~ list files ~
-        id: ListfILES
-        run: ls -a
-        working-directory: ./micros/people/utils
-
       - name: ~ Generar openapi json ~
         id: GenerateOpenApiJson
         run: serverless openapi generate -o example_swagger_doc.json -f json
@@ -54,10 +49,10 @@ jobs:
         run: aws s3 cp example_swagger_doc.json ${{ env.BUCKET }}/docs/
         working-directory: ./micros/people
 
-      - name: ~ Remove env ~
-        id: RemoveEnv
-        run: rm .env.local
-        working-directory: ./utils
+      # - name: ~ Remove env ~
+      #   id: RemoveEnv
+      #   run: rm .env.local
+      #   working-directory: ./utils
       
       - name: ~ Deploy microservice ~
         id: DeployMS
