@@ -12,7 +12,7 @@ provider:
       managedPolicies:
         - arn:aws:iam::aws:policy/AWSLambda_FullAccess
         - arn:aws:iam::aws:policy/SecretsManagerReadWrite
-  environment: ${file(configsde.js)}
+  environment: ${file(configs.js)}
 
 package:
   # individually: true
@@ -24,19 +24,7 @@ package:
     - '*'
 
 plugins:
-  # - serverless-openapi-integration-helper
   - serverless-openapi-documentation
-
-# openApiIntegration:
-#   inputFile: schema.yml
-#   # package: true
-#   autoMock: true
-#   outputFile: api.yml #optional, defaults to api.yml
-  # mapping:
-  #   - path: ./
-  #     stage: [test]
-    # - path: mocks/customer.yml
-    #   stage: test
 
 custom:
   documentation: ${file(serverless.doc.yml):documentation}

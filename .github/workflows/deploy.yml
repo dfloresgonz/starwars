@@ -25,6 +25,11 @@ jobs:
         id: InstallDeps
         run: npm ci --also=dev
 
+      - name: ~ Create env ~
+        id: CreateEnv
+        run: echo -e "HOST=${{env.HOST}},\nUSER=${{env.nUSER}}\nBD=${{env.BD}}" > .env.local
+        working-directory: ./micros/people
+
       # - name: ~ Run tests ~
       #   id: RunTests
       #   run: npm test
