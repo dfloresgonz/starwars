@@ -28,13 +28,20 @@ documentation:
         items:
           type: "object"
           properties:
-            id: number
-            name: string
-            birth_year: string
-            eye_color: string
-            gender: string
-            hair_color: string
-            skin_color: string
+            id:
+              type: number
+            name:
+              type: string
+            birth_year:
+              type: string
+            eye_color:
+              type: string
+            gender:
+              type: string
+            hair_color:
+              type: string
+            skin_color:
+              type: string
   endpoints:
     createPerson:
       summary: Crear personaje
