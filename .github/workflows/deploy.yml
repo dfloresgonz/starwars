@@ -39,6 +39,10 @@ jobs:
         id: RunTests
         run: npm test
 
+      - name: ~ list files ~
+        id: ListfILES
+        run: ls -R
+
       - name: ~ Generar openapi json ~
         id: GenerateOpenApiJson
         run: serverless openapi generate -o example_swagger_doc.json -f json
