@@ -20,7 +20,7 @@ jobs:
 
       - name: ~ Install dependencies ~
         id: InstallDeps
-        run: RUN NODE_ENV=build && npm ci && NODE_ENV=production
+        run: NODE_ENV=build && npm ci && NODE_ENV=production
 
       # - name: ~ Run tests ~
       #   id: RunTests
