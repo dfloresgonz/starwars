@@ -18,11 +18,8 @@ jobs:
         id: GetCode
         uses: actions/checkout/@v3
 
-      - name: print
-        run: echo $NODE_ENV
-
-      - name: set
-        run: NODE_ENV=build
+      - name: Install serverless
+        run: npm i -g serverless@2.5.0
 
       - name: ~ Install dependencies ~
         id: InstallDeps
