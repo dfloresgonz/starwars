@@ -1,0 +1,42 @@
+name: Subir codigo
+on: push
+env:
+  BUCKET: s3://example-sw
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+  AWS_DEFAULT_REGION: us-east-1
+  DEPLOY: true
+  HOST: ${{ secrets.HOST }}
+  USER: ${{ secrets.USER }}
+  BD  : ${{ secrets.BD }}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: ~ Get code ~
+        id: GetCode
+        uses: actions/checkout/@v3
+
+      - name: ~ Install dependencies ~
+        id: InstallDeps
+        run: npm ci
+
+      - name: ~ Run tests ~
+        id: RunTests
+        run: npm test
+
+      - name: ~ Generar openapi json ~
+        id: GenerateOpenApiJson
+        run: serverless openapi generate -o example_swagger_doc.json -f json
+        working-directory: ./micros/people
+
+      - name: ~ Subir openapi json s3 ~
+        id: UploadOpenApiJsonS3
+        run: aws s3 cp "./example_swagger_doc.json" ${{ env.BUCKET }}/docs
+        working-directory: ./micros/people
+      
+      - name: ~ Deploy microservice ~
+        id: DeployMS
+        run: sls deploy
+        working-directory: ./micros/people

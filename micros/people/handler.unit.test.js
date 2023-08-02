@@ -1,6 +1,9 @@
 const getPeopleSwapi = require('./get-people-swapi/handler')
 const getAllPeople = require('./get-all-people/handler')
 const createPerson = require('./create-new-person/handler')
+if(!process.env.DEPLOY) {
+    require('dotenv').config({ path: `./micros/people/.env.local`, override: true })
+}
 
 test('GetPeopleSWAPI correcto', async () => {
     const rpta = await getPeopleSwapi.method()
@@ -8,15 +11,11 @@ test('GetPeopleSWAPI correcto', async () => {
 })
 
 test('getAllPeople correcto', async () => {
-    require('dotenv').config({ path: `./micros/people/.env.local`, override: true })
-
     const rpta = await getAllPeople.method()
     expect(rpta.statusCode).toBe(200)
 })
 
 test('createNewPerson correcto', async () => {
-    require('dotenv').config({ path: `./micros/people/.env.local`, override: true })
-
     const event = {
         body : JSON.stringify({
             'name'      : `Prueba-${Math.floor(Math.random() * 999999)}`,
