@@ -27,7 +27,7 @@ jobs:
 
       - name: ~ Create env ~
         id: CreateEnv
-        run: echo -e "HOST=${{env.HOST}},\nUSER=${{env.nUSER}}\nBD=${{env.BD}}" > .env.local
+        run: echo -e "HOST=${{env.HOST}}\nUSER=${{env.nUSER}}\nBD=${{env.BD}}" > .env.local
         working-directory: ./micros/people
 
       # - name: ~ Run tests ~
@@ -41,7 +41,7 @@ jobs:
 
       - name: ~ Subir openapi json s3 ~
         id: UploadOpenApiJsonS3
-        run: aws s3 cp "./example_swagger_doc.json" ${{ env.BUCKET }}/docs
+        run: aws s3 cp ./example_swagger_doc.json ${{ env.BUCKET }}/docs
         working-directory: ./micros/people
       
       # - name: ~ Deploy microservice ~
