@@ -34,6 +34,10 @@ Solo pusheando a la rama.
 
 Se ejecutará el workflow definido y hará las pruebas y el deploy a aws.
 
+## Documentación SwaggerUI
+
+- http://example-sw.s3-website-us-east-1.amazonaws.com/index.html
+
 
 ## Funcionalidad
 
