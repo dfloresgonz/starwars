@@ -11,8 +11,6 @@ documentation:
         properties:
           msj:
             type: string
-          code:
-            type: string
     - name: RequestObject
       description: RequestObject...
       contentType: application/json
@@ -20,6 +18,18 @@ documentation:
         $schema: http://json-schema.org/draft-04/schema#
         properties:
           nombre:
+            type: string
+    - name: ResponseObjectListPeople
+      description: Respuesta listpeople
+      contentType: application/json
+      schema:
+        $schema: http://json-schema.org/draft-04/schema#
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          birth_year:
             type: string
   endpoints:
     createPerson:
@@ -35,3 +45,12 @@ documentation:
             description: "Mensaje de confirmación"
           responseModels:
             application/json: ResponseObject
+    listPeople:
+      summary: Listar personajes
+      description: Lista los personajes desde la BD
+      methodResponses:
+        - statusCode: 200
+          responseBody:
+            description: "Mensaje de confirmación"
+          responseModels:
+            application/json: ResponseObjectListPeople

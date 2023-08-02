@@ -30,6 +30,7 @@ functions:
       - http:
           method: get
           path: people/listPeople
+          documentation: ${file(serverless.doc.yml):documentation.endpoints.listPeople}
     package:
       include:
         - './get-all-people/**'

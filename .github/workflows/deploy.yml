@@ -49,11 +49,6 @@ jobs:
         run: aws s3 cp example_swagger_doc.json ${{ env.BUCKET }}/docs/
         working-directory: ./micros/people
 
-      # - name: ~ Remove env ~
-      #   id: RemoveEnv
-      #   run: rm .env.local
-      #   working-directory: ./utils
-      
       - name: ~ Deploy microservice ~
         id: DeployMS
         run: sls deploy
