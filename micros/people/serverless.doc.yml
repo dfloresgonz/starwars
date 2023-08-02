@@ -11,6 +11,8 @@ documentation:
         properties:
           msj:
             type: string
+          code:
+            type: string
     - name: RequestObject
       description: RequestObject...
       contentType: application/json
