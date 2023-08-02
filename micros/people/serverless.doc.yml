@@ -25,12 +25,15 @@ documentation:
       schema:
         $schema: http://json-schema.org/draft-04/schema#
         properties:
-          id:
-            type: integer
-          name:
-            type: string
-          birth_year:
-            type: string
+          SomeObject:
+            type: object
+            properties:
+              id:
+                type: number
+              name:
+                type: string
+              birth_year:
+                type: string
   endpoints:
     createPerson:
       summary: Crear personaje
