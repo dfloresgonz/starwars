@@ -27,7 +27,7 @@ jobs:
 
       - name: ~ Create env ~
         id: CreateEnv
-        run: echo -e "HOST_BD=${{env.HOST_BD}}\USER_BD=${{env.USER_BD}}\nBD_NAME=${{env.BD_NAME}}" > .env.local
+        run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_NAME=${{env.BD_NAME}}" > .env.local
         working-directory: ./utils
 
       - name: ~ Move utils ~
