@@ -18,9 +18,15 @@ jobs:
         id: GetCode
         uses: actions/checkout/@v3
 
+      - name: print
+        run: echo NODE_ENV
+
+      - name: set
+        run: NODE_ENV=build
+
       - name: ~ Install dependencies ~
         id: InstallDeps
-        run: echo NODE_ENV && NODE_ENV=build && npm ci
+        run: npm ci --include=dev
 
       # - name: ~ Run tests ~
       #   id: RunTests
