@@ -27,7 +27,7 @@ jobs:
 
       - name: ~ Create env ~
         id: CreateEnv
-        run: echo -e "HOST=${{env.HOST}}\nUSER=${{env.nUSER}}\nBD=${{env.BD}}" > .env.local
+        run: echo -e "HOST=${{env.HOST}}\nUSER=${{env.USER}}\nBD=${{env.BD}}" > .env.local
         working-directory: ./micros/people
 
       - name: ~ Run tests ~

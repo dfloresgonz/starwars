@@ -15,7 +15,7 @@ provider:
   environment: ${file(configs.js)}
 
 package:
-  # individually: true
+  individually: true
   # patterns:
   exclude:
     # - '!node_modules/**'
