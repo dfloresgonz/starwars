@@ -24,16 +24,17 @@ documentation:
       contentType: application/json
       schema:
         $schema: http://json-schema.org/draft-04/schema#
-        properties:
-          SomeObject:
-            type: object
-            properties:
-              id:
-                type: number
-              name:
-                type: string
-              birth_year:
-                type: string
+        type: array
+        items:
+          type: "object"
+          properties:
+            id: number
+            name: string
+            birth_year: string
+            eye_color: string
+            gender: string
+            hair_color: string
+            skin_color: string
   endpoints:
     createPerson:
       summary: Crear personaje

@@ -15,6 +15,16 @@
             "type": "string"
           }
         }
+      },
+      "ResponseObjectListPeople": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": "number",
+            "birth_year": "string"
+          }
+        }
       }
     },
     "securitySchemes": {}
@@ -25,6 +35,25 @@
     "version": "1"
   },
   "paths": {
+    "/people/listPeople": {
+      "get": {
+        "operationId": "listPeople",
+        "summary": "Listar personajes",
+        "description": "Lista los personajes desde la BD",
+        "responses": {
+          "200": {
+            "description": "Mensaje de confirmación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseObjectListPeople"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/people/createPerson": {
       "post": {
         "operationId": "createPerson",
