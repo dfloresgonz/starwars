@@ -20,7 +20,7 @@ Este es un ejemplo sencillo y muy básico que utiliza el framework Serverless, e
 npm i
 ```
 
-## Crear .env.local
+## Crear .env.local dentro de la carpeta utils
 
 ```txt
 HOST=<<mysql host>>
