@@ -1,7 +1,7 @@
-const mysql = require('mysql2/promise')
-const password = require('./secret')
+import { createPool, PoolOptions, RowDataPacket } from 'mysql2/promise'
+import { getPassword } from './secret'
 
-const config = {
+const config: PoolOptions = {
     host    : process.env.HOST_BD,
     user    : process.env.USER_BD,
     database: process.env.BD_NAME,
@@ -13,10 +13,13 @@ const config = {
 }
 
 const getCon = async () => {
-    const pwd = await password.getPassword()
+    const pwd = await getPassword()
     config.password = pwd
-    const connection = mysql.createPool(config)
+    const connection = createPool(config)
     return connection
 }
 
-exports.getCon = getCon
+export {
+    getCon,
+    RowDataPacket
+}

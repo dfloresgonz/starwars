@@ -1,26 +1,35 @@
-service: starwars-backend-people
+service: starwars-backend-peopletypes
+
+configValidationMode: error
 
 provider:
   name: aws
   runtime: nodejs18.x
   stage: ${opt:stage, 'test'}
   region: us-east-1
-  iamManagedPolicies:
-    - arn:aws:iam::aws:policy/AWSLambda_FullAccess
-    - arn:aws:iam::aws:policy/SecretsManagerReadWrite
-  environment: ${file(./utils/configs.js)}
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+  environment: ${file(../../libs/configs.js)}
 
 package:
   individually: true
-  exclude:
-    - 'node_modules/**'
-    - ./**
+  patterns:
+    - '!node_modules/**'
+    - '!./**'
 
 plugins:
-  - serverless-openapi-documentation
+  - serverless-offline
+  # - serverless-openapi-documentation
+  - serverless-esbuild
 
 custom:
-  documentation: ${file(serverless.doc.yml):documentation}
+  esbuild:
+    bundle: true
+    minify: true
+  # documentation: ${file(serverless.doc.yml):documentation}
 
 functions:
   listPeople:
@@ -29,33 +38,33 @@ functions:
     events:
       - http:
           method: get
-          path: people/listPeople
-          documentation: ${file(serverless.doc.yml):documentation.endpoints.listPeople}
-    package:
-      include:
-        - './get-all-people/**'
-        - './database.js'
-        - './secret.js'
-        - './utils/**'
+          path: api/general/listPeople
+          # documentation: ${file(serverless.doc.yml):documentation.endpoints.listPeople}
+    # package:
+    #   include:
+        # - './get-all-people/**'
+        # - './database.js'
+        # - './secret.js'
+        # - './utils/**'
     layers:
       - ${cf:layers5-dev.Dependencias5LayerExport}
   
-  createPerson:
-    handler: create-new-person/handler.method
-    timeout: 8
-    events:
-      - http:
-          method: post
-          path: people/createPerson
-          documentation: ${file(serverless.doc.yml):documentation.endpoints.createPerson}
-    package:
-      include:
-        - './create-new-person/**'
-        - './database.js'
-        - './secret.js'
-        - './utils/**'
-    layers:
-      - ${cf:layers5-dev.Dependencias5LayerExport}
+  # createPerson:
+  #   handler: create-new-person/handler.method
+  #   timeout: 8
+  #   events:
+  #     - http:
+  #         method: post
+  #         path: people/createPerson
+  #         documentation: ${file(serverless.doc.yml):documentation.endpoints.createPerson}
+  #   package:
+  #     include:
+  #       - './create-new-person/**'
+  #       - './database.js'
+  #       - './secret.js'
+  #       - './utils/**'
+  #   layers:
+  #     - ${cf:layers5-dev.Dependencias5LayerExport}
 
   listPeopleSWAPI:
     handler: get-people-swapi/handler.method
@@ -63,10 +72,10 @@ functions:
     events:
       - http:
           method: get
-          path: people/listPeopleSWAPI
-    package:
-      include:
-        - './get-people-swapi/**'
-        - './utils/**'
+          path: api/general/listPeopleSWAPI
+    # package:
+    #   include:
+    #     - './get-people-swapi/**'
+    #     - './utils/**'
     layers:
       - ${cf:layers5-dev.Dependencias5LayerExport}

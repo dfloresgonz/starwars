@@ -18,37 +18,52 @@ jobs:
         uses: actions/checkout/@v3
 
       - name: Install serverless
-        run: npm i -g serverless@2.5.0
+        run: npm i -g serverless
 
       - name: ~ Install dependencies ~
         id: InstallDeps
         run: npm ci --also=dev
 
+      - name: ~ Install dependencies People ~
+        id: InstallDepsPeople
+        run: npm ci --also=dev
+        working-directory: ./micros/people
+
+      - name: ~ Install dependencies Films ~
+        id: InstallDepsFilms
+        run: npm ci --also=dev
+        working-directory: ./micros/people
+
       - name: ~ Create env ~
         id: CreateEnv
         run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_NAME=${{env.BD_NAME}}" > .env.local
-        working-directory: ./utils
+        working-directory: ./libs
 
-      - name: ~ Move utils ~
-        id: MoveUtils
-        run: cp -R ../../utils/ ./utils
-        working-directory: ./micros/people
+      # - name: ~ Move utils ~
+      #   id: MoveUtils
+      #   run: cp -R ../../utils/ ./utils
+      #   working-directory: ./micros/people
 
       - name: ~ Run tests ~
         id: RunTests
         run: npm test
 
-      - name: ~ Generar openapi json ~
-        id: GenerateOpenApiJson
-        run: serverless openapi generate -o example_swagger_doc.json -f json
-        working-directory: ./micros/people
+      # - name: ~ Generar openapi json ~
+      #   id: GenerateOpenApiJson
+      #   run: serverless openapi generate -o example_swagger_doc.json -f json
+      #   working-directory: ./micros/people
 
-      - name: ~ Subir openapi json s3 ~
-        id: UploadOpenApiJsonS3
-        run: aws s3 cp example_swagger_doc.json ${{ env.BUCKET }}/docs/
-        working-directory: ./micros/people
+      # - name: ~ Subir openapi json s3 ~
+      #   id: UploadOpenApiJsonS3
+      #   run: aws s3 cp example_swagger_doc.json ${{ env.BUCKET }}/docs/
+      #   working-directory: ./micros/people
 
       - name: ~ Deploy microservice ~
-        id: DeployMS
+        id: DeployMSPeople
         run: sls deploy
         working-directory: ./micros/people
+      
+      - name: ~ Deploy microservice ~
+        id: DeployMSFilms
+        run: sls deploy
+        working-directory: ./micros/films

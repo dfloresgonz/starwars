@@ -1,0 +1,41 @@
+service: starwars-backend-filmstypes
+
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'test'}
+  region: us-east-1
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+  environment: ${file(../../libs/configs.js)}
+
+package:
+  individually: true
+  patterns:
+    - '!node_modules/**'
+    - '!./**'
+
+plugins:
+  - serverless-offline
+  - serverless-esbuild
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+
+functions:
+  listFilms:
+    handler: get-films/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: get
+          path: api/general/listFilms
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}

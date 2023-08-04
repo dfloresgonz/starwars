@@ -1,0 +1,11 @@
+port: 4000
+stage: test
+services:
+  - srvName: people
+    srvPath: people
+    srvSource: ./micros/people
+    stripBasePath: true
+  - srvName: films
+    srvPath: films
+    srvSource: ./micros/films
+    stripBasePath: true

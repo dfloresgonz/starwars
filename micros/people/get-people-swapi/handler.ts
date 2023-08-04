@@ -1,4 +1,4 @@
-'use strict'
+import {APIGatewayProxyResult} from 'aws-lambda'
 
 const response = {
     statusCode: 200,
@@ -8,13 +8,14 @@ const response = {
     body: '',
 }
 
-module.exports.method = async event => {
+export const method = async (event, context): Promise<APIGatewayProxyResult> => {
     try {
-        const logic = require('./logic')
 
-        const resp = await logic.getPeople()
+        // const logic = require('./logic')
 
-        response.body = JSON.stringify(resp)
+        // const resp = await logic.getPeopleSWAPI()
+
+        response.body = JSON.stringify({msj: 'Hi world'})
     } catch (err) {
         console.log(err)
         response.statusCode = err.status || 500
