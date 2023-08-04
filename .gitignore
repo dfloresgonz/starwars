@@ -2,7 +2,6 @@ node_modules/
 .env.local
 .serverless/
 .esbuild/
-.build/
 
 # Visual Studio Code
 .vscode/*
