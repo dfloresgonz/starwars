@@ -1,4 +1,5 @@
 import {APIGatewayProxyResult} from 'aws-lambda'
+import { getPeopleSWAPI, PeopleSwapi } from './logic'
 
 const response = {
     statusCode: 200,
@@ -8,14 +9,21 @@ const response = {
     body: '',
 }
 
+interface Rpta {
+    suma: number,
+    datos: PeopleSwapi[]
+}
+
 export const method = async (event, context): Promise<APIGatewayProxyResult> => {
     try {
+        const resp:PeopleSwapi[] = await getPeopleSWAPI()
 
-        // const logic = require('./logic')
+        const rpta:Rpta = {
+            suma : 2,
+            datos: resp
+        }
 
-        // const resp = await logic.getPeopleSWAPI()
-
-        response.body = JSON.stringify({msj: 'Hi world'})
+        response.body = JSON.stringify(rpta)
     } catch (err) {
         console.log(err)
         response.statusCode = err.status || 500

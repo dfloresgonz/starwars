@@ -1,4 +1,5 @@
-'use strict'
+import {APIGatewayProxyResult} from 'aws-lambda'
+import { createPerson, IResponse } from './logic'
 
 const response = {
     statusCode: 200,
@@ -8,7 +9,7 @@ const response = {
     body: '',
 }
 
-module.exports.method = async event => {
+export const method = async (event, context): Promise<APIGatewayProxyResult> => {
     try {
         const parsedData = new URLSearchParams( JSON.parse(event.body) )
         const body = {}
@@ -16,9 +17,7 @@ module.exports.method = async event => {
             body[pair[0]] = pair[1]
         }
 
-        const logic = require('./logic')
-
-        const resp = await logic.createPerson(body)
+        const resp: IResponse = await createPerson(body)
 
         response.body = JSON.stringify(resp)
     } catch (err) {

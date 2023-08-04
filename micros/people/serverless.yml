@@ -39,32 +39,18 @@ functions:
       - http:
           method: get
           path: api/general/listPeople
-          # documentation: ${file(serverless.doc.yml):documentation.endpoints.listPeople}
-    # package:
-    #   include:
-        # - './get-all-people/**'
-        # - './database.js'
-        # - './secret.js'
-        # - './utils/**'
     layers:
       - ${cf:layers5-dev.Dependencias5LayerExport}
   
-  # createPerson:
-  #   handler: create-new-person/handler.method
-  #   timeout: 8
-  #   events:
-  #     - http:
-  #         method: post
-  #         path: people/createPerson
-  #         documentation: ${file(serverless.doc.yml):documentation.endpoints.createPerson}
-  #   package:
-  #     include:
-  #       - './create-new-person/**'
-  #       - './database.js'
-  #       - './secret.js'
-  #       - './utils/**'
-  #   layers:
-  #     - ${cf:layers5-dev.Dependencias5LayerExport}
+  createPerson:
+    handler: create-new-person/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: post
+          path: api/general/createPerson
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}
 
   listPeopleSWAPI:
     handler: get-people-swapi/handler.method
@@ -73,9 +59,5 @@ functions:
       - http:
           method: get
           path: api/general/listPeopleSWAPI
-    # package:
-    #   include:
-    #     - './get-people-swapi/**'
-    #     - './utils/**'
     layers:
       - ${cf:layers5-dev.Dependencias5LayerExport}

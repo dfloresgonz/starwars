@@ -1,4 +1,4 @@
-import { createPool, PoolOptions, RowDataPacket } from 'mysql2/promise'
+import { createPool, PoolOptions, RowDataPacket, ResultSetHeader, FieldPacket } from 'mysql2/promise'
 import { getPassword } from './secret'
 
 const config: PoolOptions = {
@@ -21,5 +21,7 @@ const getCon = async () => {
 
 export {
     getCon,
-    RowDataPacket
+    RowDataPacket,
+    ResultSetHeader,
+    FieldPacket
 }

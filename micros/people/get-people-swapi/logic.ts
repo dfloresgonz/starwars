@@ -1,6 +1,5 @@
-'use strict';
+import { fetchPeopleSWAPI, PeopleSwapi } from './model'
 
-const model = require('./model')
 const dictionary = {
     "name"      : "nombre",
     "height"    : "talla",
@@ -20,8 +19,8 @@ const dictionary = {
     "url"       : "url"
   }
 
-module.exports.getPeopleSWAPI = async () => {
-    const people = await model.getPeopleSWAPI()
+const getPeopleSWAPI = async ():Promise<PeopleSwapi[]> => {
+    const people:PeopleSwapi[] = await fetchPeopleSWAPI()
 
     for(let pers of people) {
         const keys = Object.entries(pers)
@@ -32,4 +31,9 @@ module.exports.getPeopleSWAPI = async () => {
     }
 
     return people
+}
+
+export {
+    getPeopleSWAPI,
+    PeopleSwapi
 }

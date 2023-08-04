@@ -39,24 +39,9 @@ jobs:
         run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_NAME=${{env.BD_NAME}}" > .env.local
         working-directory: ./libs
 
-      # - name: ~ Move utils ~
-      #   id: MoveUtils
-      #   run: cp -R ../../utils/ ./utils
-      #   working-directory: ./micros/people
-
       - name: ~ Run tests ~
         id: RunTests
         run: npm test
-
-      # - name: ~ Generar openapi json ~
-      #   id: GenerateOpenApiJson
-      #   run: serverless openapi generate -o example_swagger_doc.json -f json
-      #   working-directory: ./micros/people
-
-      # - name: ~ Subir openapi json s3 ~
-      #   id: UploadOpenApiJsonS3
-      #   run: aws s3 cp example_swagger_doc.json ${{ env.BUCKET }}/docs/
-      #   working-directory: ./micros/people
 
       - name: ~ Deploy microservice ~
         id: DeployMSPeople
