@@ -22,6 +22,7 @@
     "@aws-sdk/client-secrets-manager": "^3.382.0",
     "@types/aws-lambda": "^8.10.119",
     "@types/jest": "^29.5.3",
+    "@types/node-fetch": "^2.6.11",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "@typescript-eslint/parser": "^7.0.1",
     "aws-sdk": "^2.1427.0",

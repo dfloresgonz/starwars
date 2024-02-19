@@ -4,14 +4,10 @@ import { PeopleSwapi } from './Models';
 
 const URL = `https://swapi.py4e.com/api/people`;
 const fetchPeopleSWAPI = async (): Promise<PeopleSwapi[]> => {
-    
-    const response = await fetch(URL, {method: 'GET'});
-    const rpta = await response.json() //
+    const response: any = await fetch(URL, { method: 'GET' });
+    const rpta = await response.json(); //
 
-    return rpta.results
+    return rpta.results;
 };
 
-export {
-    fetchPeopleSWAPI,
-    PeopleSwapi
-}
+export { fetchPeopleSWAPI, PeopleSwapi };
