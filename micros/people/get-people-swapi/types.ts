@@ -1,4 +1,4 @@
-interface PeopleSwapi {
+export type PeopleSwapi = {
     name: string;
     height: number;
     mass: number;
@@ -15,8 +15,9 @@ interface PeopleSwapi {
     created: string;
     edited: string;
     url: string;
-}
+};
 
-export {
-    PeopleSwapi
-}
+export type Rpta = {
+    suma: number;
+    datos: PeopleSwapi[];
+};

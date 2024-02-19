@@ -1,7 +1,7 @@
 import { getPeople } from './model';
-import { People } from './Models';
+import { People } from './types';
 
 export const getPeoples = async (): Promise<People[]> => {
-    const data = await getPeople();
+    const data: People[] = await getPeople();
     return data;
 };

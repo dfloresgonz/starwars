@@ -1,11 +1,10 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
 
-// import {getPeoples} from './logic'
+import { Rpta } from './types';
 import { sumar } from '../../../libs/Calculo';
 import { log } from '../../../libs/helpers/log';
-// import { People } from './Models'
 
-const response = {
+const response: APIGatewayProxyResult = {
     statusCode: 200,
     headers: {
         'Access-Control-Allow-Origin': '*',
@@ -13,19 +12,12 @@ const response = {
     body: '',
 };
 
-interface Rpta {
-    suma: number;
-    // datos: People[]
-}
-
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-        // const resp:People[] = await getPeoples()
         const suma: number = sumar(14, 28);
 
         const rpta: Rpta = {
             suma,
-            // datos: resp
         };
 
         response.body = JSON.stringify(rpta);

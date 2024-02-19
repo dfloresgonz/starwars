@@ -1,4 +1,5 @@
-import { fetchPeopleSWAPI, PeopleSwapi } from './model';
+import { fetchPeopleSWAPI } from './model';
+import { PeopleSwapi } from './types';
 
 // const dictionary = {
 //     name: 'nombre',
@@ -19,7 +20,7 @@ import { fetchPeopleSWAPI, PeopleSwapi } from './model';
 //     url: 'url',
 // };
 
-const getPeopleSWAPI = async (): Promise<PeopleSwapi[]> => {
+export const getPeopleSWAPI = async (): Promise<PeopleSwapi[]> => {
     const people: PeopleSwapi[] = await fetchPeopleSWAPI();
 
     // for (let pers of people) {
@@ -32,5 +33,3 @@ const getPeopleSWAPI = async (): Promise<PeopleSwapi[]> => {
 
     return people;
 };
-
-export { getPeopleSWAPI, PeopleSwapi };

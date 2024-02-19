@@ -1,7 +1,7 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
 
 import { createPerson } from './logic';
-import { Response, CreatePerson } from './types/person';
+import { Response, CreatePerson } from './types';
 import { log } from '../../../libs/helpers/log';
 
 const response: APIGatewayProxyResult = {

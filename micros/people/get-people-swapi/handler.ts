@@ -1,20 +1,16 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
 
-import { getPeopleSWAPI, PeopleSwapi } from './logic';
+import { getPeopleSWAPI } from './logic';
+import { Rpta, PeopleSwapi } from './types';
 import { log } from '../../../libs/helpers/log';
 
-const response = {
+const response: APIGatewayProxyResult = {
     statusCode: 200,
     headers: {
         'Access-Control-Allow-Origin': '*',
     },
     body: '',
 };
-
-interface Rpta {
-    suma: number;
-    datos: PeopleSwapi[];
-}
 
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
@@ -27,7 +23,7 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
 
         response.body = JSON.stringify(rpta);
     } catch (err: any) {
-        log('Error:', err);
+        log('handler.Error:', err);
         response.statusCode = err.status || 500;
         response.body = JSON.stringify({
             msj: err.msj || 'Hubo un error',

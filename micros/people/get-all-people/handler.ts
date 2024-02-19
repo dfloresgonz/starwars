@@ -5,22 +5,17 @@ import {
 } from 'aws-lambda';
 
 import { getPeoples } from './logic';
-import { People } from './Models';
+import { People, Rpta } from './types';
 import { sumar } from '../../../libs/Calculo';
 import { log } from '../../../libs/helpers/log';
 
-const response = {
+const response: APIGatewayProxyResult = {
     statusCode: 200,
     headers: {
         'Access-Control-Allow-Origin': '*',
     },
     body: '',
 };
-
-interface Rpta {
-    suma: number;
-    datos: People[];
-}
 
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {

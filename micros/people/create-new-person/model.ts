@@ -1,13 +1,13 @@
-import { RptaInsert, CreatePerson } from './types/person';
+import { RptaInsert, CreatePerson } from './types';
 import { getCon, ResultSetHeader, FieldPacket } from '../../../libs/database';
 
 const sql: string =
     'INSERT INTO `people` (name, birth_year, eye_color, gender, hair_color, skin_color) VALUES (?,?,?,?,?,?)';
 
-const insertPeople = async (params: CreatePerson): Promise<RptaInsert> => {
+export const insertPeople = async (params: CreatePerson): Promise<RptaInsert> => {
     const connection = await getCon();
 
-    const sqlParams = [
+    const sqlParams: string[] = [
         params.name,
         params.birth_year,
         params.eye_color,
@@ -24,5 +24,3 @@ const insertPeople = async (params: CreatePerson): Promise<RptaInsert> => {
     //     throw new Error({ msj: 'Hubo un error al registrar', status: 400 });
     return rpta;
 };
-
-export { insertPeople };
