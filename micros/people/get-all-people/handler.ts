@@ -20,6 +20,8 @@ interface Rpta {
 
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
+        log('query:', event.queryStringParameters);
+        log('query:', event.queryStringParameters?.query);
         const resp: People[] = await getPeoples();
         const suma = sumar(4, 10);
 

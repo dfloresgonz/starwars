@@ -20,22 +20,17 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
         if (bodyparams === '') {
             throw new Error('No se encontraron parametros');
         }
+        // keys exist
         // END VALIDATIONS
-        // const parsedData = new URLSearchParams(JSON.parse(bodyparams));
-        // log('parsedData:', parsedData);
 
         const params: CreatePerson = JSON.parse(bodyparams);
-
-        // for (var pair of parsedData.entries()) {
-        //     params[pair[0]] = pair[1];
-        // }
 
         log('params:', params);
         const resp: Response = await createPerson(params);
 
         response.body = JSON.stringify(resp);
     } catch (err: any) {
-        log('Error', err);
+        log('handler.error', err);
         response.statusCode = err.status || 500;
         response.body = JSON.stringify({
             msj: err.msj || 'Hubo un error',
