@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Node 20 + ESM + Strictest",
+    "compilerOptions": {
+      "target": "ES2022",
+      "module": "commonjs",
+      "lib": ["ES2023"],
+      "declaration": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "typeRoots": ["./node_modules/@types"]
+    },
+     "exclude": [
+      "node_modules",
+      "notes",
+      "**/*.note.ts",
+      ".git",
+      "jest.config.ts"
+    ]
+  }

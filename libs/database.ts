@@ -1,27 +1,29 @@
-import { createPool, PoolOptions, RowDataPacket, ResultSetHeader, FieldPacket } from 'mysql2/promise'
-import { getPassword } from './secret'
+import {
+    createPool,
+    PoolOptions,
+    RowDataPacket,
+    ResultSetHeader,
+    FieldPacket,
+    Pool,
+} from 'mysql2/promise';
+
+import { HOST_BD, USER_BD, BD_NAME, BD_PASS } from './environment/utilities';
 
 const config: PoolOptions = {
-    host    : process.env.HOST_BD,
-    user    : process.env.USER_BD,
-    database: process.env.BD_NAME,
+    host: HOST_BD,
+    user: USER_BD,
+    database: BD_NAME,
+    password: BD_PASS,
     waitForConnections: true,
     connectionLimit: 10,
     maxIdle: 10,
     idleTimeout: 60000,
-    queueLimit: 0
-}
+    queueLimit: 0,
+};
 
-const getCon = async () => {
-    const pwd = await getPassword()
-    config.password = pwd
-    const connection = createPool(config)
-    return connection
-}
+const getCon = async (): Promise<Pool> => {
+    const connection: Pool = createPool(config);
+    return connection;
+};
 
-export {
-    getCon,
-    RowDataPacket,
-    ResultSetHeader,
-    FieldPacket
-}
+export { getCon, RowDataPacket, ResultSetHeader, FieldPacket };

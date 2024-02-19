@@ -1,19 +1,12 @@
-import { insertPeople, RptaInsert } from './model'
+import { insertPeople } from './model';
+import { CreatePerson, Response, RptaInsert } from './types/Types';
 
-interface IResponse {
-    msj: string;
-}
+const createPerson = async (params: CreatePerson): Promise<Response> => {
+    const data: RptaInsert = await insertPeople(params);
+    const rpta: Response = {
+        msj: 'Se registró correctamente',
+    };
+    return rpta;
+};
 
-const createPerson = async (params):Promise<IResponse> => {
-    const data: RptaInsert = await insertPeople(params)
-    let rpta: IResponse
-    rpta = {
-        msj: 'Se registró correctamente'
-    }
-    return rpta
-}
-
-export {
-    createPerson,
-    IResponse
-}
+export { createPerson };
