@@ -1,4 +1,4 @@
-import { /*Context,*/ APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda';
+import { APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda';
 
 import { method } from './handler';
 

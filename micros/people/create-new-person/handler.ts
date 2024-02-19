@@ -31,9 +31,9 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
             skin_color: '',
         };
 
-        for (var pair of parsedData.entries()) {
-            params[pair[0]] = pair[1];
-        }
+        // for (var pair of parsedData.entries()) {
+        //     params[pair[0]] = pair[1];
+        // }
 
         log('params:', params);
         const resp: Response = await createPerson(params);
