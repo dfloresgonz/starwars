@@ -14,22 +14,17 @@ const response: APIGatewayProxyResult = {
 
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-        const bodyparams = event.body || '';
+        const bodyparams: string = event.body || '';
         log('bodyparams:', bodyparams);
         // VALIDATIONS
-
+        if (bodyparams === '') {
+            throw new Error('No se encontraron parametros');
+        }
         // END VALIDATIONS
-        const parsedData = new URLSearchParams(JSON.parse(bodyparams));
-        log('parsedData:', parsedData);
+        // const parsedData = new URLSearchParams(JSON.parse(bodyparams));
+        // log('parsedData:', parsedData);
 
-        const params: CreatePerson = {
-            name: '',
-            birth_year: '',
-            eye_color: '',
-            hair_color: '',
-            gender: '',
-            skin_color: '',
-        };
+        const params: CreatePerson = JSON.parse(bodyparams);
 
         // for (var pair of parsedData.entries()) {
         //     params[pair[0]] = pair[1];
