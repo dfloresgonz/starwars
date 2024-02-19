@@ -1,4 +1,8 @@
-import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
+import {
+    APIGatewayProxyResult,
+    APIGatewayProxyEvent,
+    APIGatewayProxyEventQueryStringParameters,
+} from 'aws-lambda';
 
 import { getPeoples } from './logic';
 import { People } from './Models';
@@ -20,8 +24,15 @@ interface Rpta {
 
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-        log('query:', event.queryStringParameters);
-        log('query:', event.queryStringParameters?.query);
+        const query: APIGatewayProxyEventQueryStringParameters = event.queryStringParameters || {};
+        log('query:', query);
+        log('foo:', query.foo);
+
+        const foo: string = query.foo || '';
+        const age: string = query.age || '';
+
+        log('data:', { foo, age });
+
         const resp: People[] = await getPeoples();
         const suma = sumar(4, 10);
 
