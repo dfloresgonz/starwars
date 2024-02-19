@@ -1,21 +1,21 @@
-import { method } from './handler'
-import { Context, APIGatewayProxyResult, APIGatewayEvent} from 'aws-lambda'
+import { /*Context,*/ APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda';
 
-const event   = {
-    body : JSON.stringify({
-        'name'      : `Testeada-${Math.floor(Math.random() * 999999)}`,
-        'birth_year': 'AC 78',
-        'eye_color' : 'green',
-        'gender'    : 'female',
-        'hair_color': 'black',
-        'skin_color': 'red'
-    })
+import { method } from './handler';
+
+const event = {
+    body: JSON.stringify({
+        name: `Testeada-${Math.floor(Math.random() * 999999)}`,
+        birth_year: 'AC 78',
+        eye_color: 'green',
+        gender: 'female',
+        hair_color: 'black',
+        skin_color: 'red',
+    }),
 } as APIGatewayEvent;
-const context = {} as Context;
-
+// const context = {} as Context;
 
 test('Should be 200', async () => {
-    const rpta:APIGatewayProxyResult = await method(event, context)
+    const rpta: APIGatewayProxyResult = await method(event);
 
-    expect(rpta.statusCode).toBe(200)
-})
+    expect(rpta.statusCode).toBe(200);
+});

@@ -1,5 +1,5 @@
 import { insertPeople } from './model';
-import { CreatePerson, Response, RptaInsert } from './types/Types';
+import { CreatePerson, Response, RptaInsert } from './types/person';
 
 const createPerson = async (params: CreatePerson): Promise<Response> => {
     const data: RptaInsert = await insertPeople(params);

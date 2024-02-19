@@ -1,3 +1,3 @@
-export const sumar = (a: number, b: number) => {
-    return a + b
-}
+export const sumar = (a: number, b: number): number => {
+    return a + b;
+};

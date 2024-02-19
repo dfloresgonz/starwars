@@ -1,4 +1,4 @@
-import { RptaInsert, CreatePerson } from './types/Types';
+import { RptaInsert, CreatePerson } from './types/person';
 import { getCon, ResultSetHeader, FieldPacket } from '../../../libs/database';
 
 const sql: string =

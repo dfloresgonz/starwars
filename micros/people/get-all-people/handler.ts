@@ -1,7 +1,9 @@
-import {APIGatewayProxyResult} from 'aws-lambda'
-import {getPeoples} from './logic'
-import { sumar } from '../../../libs/Calculo'
-import { People } from './Models'
+import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
+
+import { getPeoples } from './logic';
+import { People } from './Models';
+import { sumar } from '../../../libs/Calculo';
+import { log } from '../../../libs/helpers/log';
 
 const response = {
     statusCode: 200,
@@ -9,30 +11,30 @@ const response = {
         'Access-Control-Allow-Origin': '*',
     },
     body: '',
-}
+};
 
 interface Rpta {
-    suma: number,
-    datos: People[]
+    suma: number;
+    datos: People[];
 }
 
-export const method = async (event, context): Promise<APIGatewayProxyResult> => {
+export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-        const resp:People[] = await getPeoples()
-        const suma = sumar(4, 10)
+        const resp: People[] = await getPeoples();
+        const suma = sumar(4, 10);
 
-        const rpta:Rpta = {
-            suma : suma,
-            datos: resp
-        }
+        const rpta: Rpta = {
+            suma,
+            datos: resp,
+        };
 
-        response.body = JSON.stringify(rpta)
-    } catch (err) {
-        console.log(err)
-        response.statusCode = err.status || 500
+        response.body = JSON.stringify(rpta);
+    } catch (err: any) {
+        log('error:', err);
+        response.statusCode = err.status || 500;
         response.body = JSON.stringify({
-            msj: err.msj || 'Hubo un error'
-        })
+            msj: err.msj || 'Hubo un error',
+        });
     }
     return response;
-}
+};
