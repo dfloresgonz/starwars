@@ -1,43 +1,43 @@
 {
-  "name": "starwars",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "DOTENV_CONFIG_PATH=libs/.env.local jest --forceExit --setupFiles dotenv/config",
-    "dev": "serverless offline",
-    "prettier": "prettier --write '**/{bin,lib,src,tst,micros}/*.ts'",
-    "lint": "eslint ./ --ext ts --report-unused-disable-directives --max-warnings 0",
-    "fix": "eslint ./ --ext ts --fix"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^16.3.1",
-    "mysql2": "^3.5.2",
-    "node-fetch": "^2.6.12"
-  },
-  "devDependencies": {
-    "@aws-sdk/client-secrets-manager": "^3.382.0",
-    "@types/aws-lambda": "^8.10.119",
-    "@types/jest": "^29.5.3",
-    "@types/node-fetch": "^2.6.11",
-    "@typescript-eslint/eslint-plugin": "^7.0.1",
-    "@typescript-eslint/parser": "^7.0.1",
-    "aws-sdk": "^2.1427.0",
-    "esbuild": "^0.17.19",
-    "eslint": "^8.56.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jest": "^27.9.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "jest": "^29.6.2",
-    "prettier": "^3.2.5",
-    "serverless": "^3.33.0",
-    "serverless-esbuild": "^1.46.0",
-    "serverless-offline": "^12.0.4",
-    "ts-jest": "^29.1.1"
-  }
+    "name": "starwars",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "DOTENV_CONFIG_PATH=libs/.env.local jest --forceExit --setupFiles dotenv/config",
+        "dev": "serverless offline",
+        "prettier": "prettier --write '**/{libs,micros}/*.ts'",
+        "lint": "eslint ./ --ext ts --report-unused-disable-directives --max-warnings 0",
+        "fix": "eslint ./ --ext ts --fix"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "mysql2": "^3.5.2",
+        "node-fetch": "^2.6.12"
+    },
+    "devDependencies": {
+        "@aws-sdk/client-secrets-manager": "^3.382.0",
+        "@types/aws-lambda": "^8.10.119",
+        "@types/jest": "^29.5.3",
+        "@types/node-fetch": "^2.6.11",
+        "@typescript-eslint/eslint-plugin": "^7.0.1",
+        "@typescript-eslint/parser": "^7.0.1",
+        "aws-sdk": "^2.1427.0",
+        "esbuild": "^0.17.19",
+        "eslint": "^8.56.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-jest": "^27.9.0",
+        "eslint-plugin-prettier": "^5.1.3",
+        "jest": "^29.6.2",
+        "prettier": "^3.2.5",
+        "serverless": "^3.33.0",
+        "serverless-esbuild": "^1.46.0",
+        "serverless-offline": "^12.0.4",
+        "ts-jest": "^29.1.1"
+    }
 }

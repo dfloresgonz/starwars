@@ -105,3 +105,7 @@ Backend-->>Front: Response
 ### Pull requests
 
 ### Code reviews
+
+### Pendientes
+
+1. Mantener actualizado el node y las librerías

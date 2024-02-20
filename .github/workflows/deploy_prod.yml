@@ -1,10 +1,11 @@
 name: Subir codigo
-on: push
+on:
+  release:
+    types: [published]
 env:
-  BUCKET: s3://example-sw
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
-  AWS_DEFAULT_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_PROD }}
+  AWS_DEFAULT_REGION: ${{ vars.AWS_REGION }}
   HOST_BD: ${{ vars.HOST_BD }}
   USER_BD: ${{ vars.USER_BD }}
   BD_NAME: ${{ vars.BD_NAME }}
@@ -15,7 +16,7 @@ jobs:
 
       - name: ~ Get code ~
         id: GetCode
-        uses: actions/checkout/@v3
+        uses: actions/checkout/@v4
 
       - name: Install serverless
         run: npm i -g serverless
