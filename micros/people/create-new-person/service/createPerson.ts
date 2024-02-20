@@ -9,9 +9,8 @@ export const createPerson = async (params: CreatePerson): Promise<Response> => {
 
     if (!data) throw new Error('Error en logic.createPerson');
 
-    const age: number = 15;
-
-    if (age < 18) throw new Error('No se puede registrar a menores de edad', { cause: 400 });
+    // const age: number = 15;
+    // if (age < 18) throw new Error('No se puede registrar a menores de edad', { cause: 400 });
 
     const rpta: Response = {
         msj: 'Se registró correctamente',
