@@ -10,9 +10,9 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_PROD }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_PROD }}
   AWS_DEFAULT_REGION: ${{ vars.AWS_REGION }}
-  HOST_BD: ${{ vars.HOST_BD }}
-  USER_BD: ${{ vars.USER_BD }}
-  BD_NAME: ${{ vars.BD_NAME }}
+  HOST_BD: ${{ vars.HOST_BD_TEST }}
+  USER_BD: ${{ vars.USER_BD_TEST }}
+  BD_PASS: ${{ secrets.BD_PASS_TEST }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
 
       - name: ~ Create env ~
         id: CreateEnv
-        run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_NAME=${{env.BD_NAME}}\nBD_PASS=${{secrets.BD_PASS}}" > .env.local
+        run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_PASS=${{env.BD_PASS}}" > .env.local
         working-directory: ./libs
 
       - name: ~ Run tests ~
@@ -50,10 +50,10 @@ jobs:
 
       - name: ~ Deploy microservice People ~
         id: DeployMSPeople
-        run: sls deploy
+        run: sls deploy -s test
         working-directory: ./micros/people
       
       - name: ~ Deploy microservice Films ~
         id: DeployMSFilms
-        run: sls deploy
+        run: sls deploy -s test
         working-directory: ./micros/films

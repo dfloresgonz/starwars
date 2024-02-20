@@ -20,13 +20,12 @@ const response: APIGatewayProxyResult = {
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const query: APIGatewayProxyEventQueryStringParameters = event.queryStringParameters || {};
-        log('query:', query);
-        log('foo:', query.foo);
 
         const foo: string = query.foo || '';
         const age: string = query.age || '';
 
         log('data:', { foo, age });
+        log('log...:', 'new');
 
         const resp: People[] = await getPeoples();
         const suma = sumar(4, 10);

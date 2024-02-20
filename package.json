@@ -16,13 +16,15 @@
     "dependencies": {
         "dotenv": "^16.3.1",
         "mysql2": "^3.5.2",
-        "node-fetch": "^2.6.12"
+        "node-fetch": "^2.6.12",
+        "pg": "^8.11.3"
     },
     "devDependencies": {
         "@aws-sdk/client-secrets-manager": "^3.382.0",
         "@types/aws-lambda": "^8.10.119",
         "@types/jest": "^29.5.3",
         "@types/node-fetch": "^2.6.11",
+        "@types/pg": "^8.11.0",
         "@typescript-eslint/eslint-plugin": "^7.0.1",
         "@typescript-eslint/parser": "^7.0.1",
         "aws-sdk": "^2.1427.0",

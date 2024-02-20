@@ -1,29 +1,15 @@
-import {
-    createPool,
-    PoolOptions,
-    RowDataPacket,
-    ResultSetHeader,
-    FieldPacket,
-    Pool,
-} from 'mysql2/promise';
+import { Pool } from 'pg';
 
-import { HOST_BD, USER_BD, BD_NAME, BD_PASS } from './environment/utilities';
+import { HOST_BD, USER_BD, BD_NAME, BD_PASS, BD_PORT } from './environment/utilities';
 
-const config: PoolOptions = {
-    host: HOST_BD,
+export const pool = new Pool({
     user: USER_BD,
+    host: HOST_BD,
     database: BD_NAME,
     password: BD_PASS,
-    waitForConnections: true,
-    connectionLimit: 10,
-    maxIdle: 10,
-    idleTimeout: 60000,
-    queueLimit: 0,
-};
+    port: BD_PORT,
+});
 
-const getCon = async (): Promise<Pool> => {
-    const connection: Pool = createPool(config);
-    return connection;
+export const endPool = async (): Promise<void> => {
+    await pool.end();
 };
-
-export { getCon, RowDataPacket, ResultSetHeader, FieldPacket };

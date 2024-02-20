@@ -1,5 +1,5 @@
 import { RptaInsert, CreatePerson } from './types';
-import { getCon, ResultSetHeader, FieldPacket } from '../../../libs/database';
+import { getCon, ResultSetHeader, FieldPacket } from '../../../libs/mysqldatabase';
 
 const sql: string =
     'INSERT INTO `people` (name, birth_year, eye_color, gender, hair_color, skin_color) VALUES (?,?,?,?,?,?)';
