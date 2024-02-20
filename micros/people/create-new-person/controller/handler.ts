@@ -1,10 +1,11 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
 
-import { createPerson } from './logic';
-import { Response, CreatePerson } from './types';
-import { log } from '../../../libs/helpers/log';
+import { handleError } from '../../../../libs/errors';
+import { log } from '../../../../libs/helpers/log';
+import { createPerson } from '../service/createPerson';
+import { Response, CreatePerson } from '../types';
 
-const response: APIGatewayProxyResult = {
+let response: APIGatewayProxyResult = {
     statusCode: 200,
     headers: {
         'Access-Control-Allow-Origin': '*',
@@ -24,17 +25,13 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
         // END VALIDATIONS
 
         const params: CreatePerson = JSON.parse(bodyparams);
-
         log('params:', params);
+
         const resp: Response = await createPerson(params);
 
         response.body = JSON.stringify(resp);
     } catch (err: any) {
-        log('handler.error', err);
-        response.statusCode = err.status || 500;
-        response.body = JSON.stringify({
-            msj: err.msj || 'Hubo un error',
-        });
+        response = { ...handleError(err) };
     }
     return response;
 };
