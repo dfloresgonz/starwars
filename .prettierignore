@@ -1,0 +1,6 @@
+.github/
+.eslint.json
+.vscode/
+readme.md
+package.json
+*.yml

@@ -1,0 +1,44 @@
+service: starwars-backend-functions-mailing
+
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'test'}
+  region: us-east-1
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+  environment: ${file(../../../libs/configs.js)}
+
+package:
+  individually: true
+  patterns:
+    - '!node_modules/**'
+    - '!./**'
+
+plugins:
+  - serverless-offline
+  - serverless-esbuild
+  - serverless-localstack
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+  localstack: ${file(../../../localstack.yml)}
+
+functions:
+  sendEmail:
+    handler: sendEmail/handler.method
+    timeout: 8
+    events:
+      - sqs:
+          arn: arn:aws:sqs:${aws:region}:${aws:accountId}:diego-test
+          batchSize: 10
+    layers:
+      - arn:aws:lambda:${aws:region}:${aws:accountId}:layer:Dependencias5:1
+

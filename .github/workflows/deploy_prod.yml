@@ -1,0 +1,56 @@
+name: Subir codigo PROD
+on:
+  release:
+    types: [published]
+env:
+  DEPLOYMENT_ENV: production
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_PROD }}
+  AWS_DEFAULT_REGION: ${{ vars.AWS_REGION }}
+  HOST_BD: ${{ vars.HOST_BD_PROD }}
+  USER_BD: ${{ vars.USER_BD_PROD }}
+  BD_PASS: ${{ secrets.BD_PASS_PROD }}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: ~ Get code ~
+        id: GetCode
+        uses: actions/checkout/@v4
+
+      - name: Install serverless
+        run: npm i -g serverless
+
+      - name: ~ Install dependencies ~
+        id: InstallDeps
+        run: npm ci --also=dev
+
+      - name: ~ Install dependencies People ~
+        id: InstallDepsPeople
+        run: npm ci --also=dev
+        working-directory: ./micros/people
+
+      - name: ~ Install dependencies Films ~
+        id: InstallDepsFilms
+        run: npm ci --also=dev
+        working-directory: ./micros/films
+
+      - name: ~ Create env ~
+        id: CreateEnv
+        run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_PASS=${{env.BD_PASS}}" > .env.local
+        working-directory: ./libs
+
+      - name: ~ Run tests ~
+        id: RunTests
+        run: npm test
+
+      - name: ~ Deploy microservice People ~
+        id: DeployMSPeople
+        run: sls deploy -s prod
+        working-directory: ./micros/people
+      
+      - name: ~ Deploy microservice Films ~
+        id: DeployMSFilms
+        run: sls deploy -s prod
+        working-directory: ./micros/films
