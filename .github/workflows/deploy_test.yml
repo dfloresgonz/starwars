@@ -11,7 +11,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_PROD }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_PROD }}
   AWS_DEFAULT_REGION: ${{ vars.AWS_REGION }}
-  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID_PROD }}
   QUEUE_URL: https://sqs.us-east-1.amazonaws.com/${{ vars.AWS_ACCOUNT_ID_PROD }}
   HOST_BD: ${{ vars.HOST_BD_TEST }}
   USER_BD: ${{ vars.USER_BD_TEST }}
@@ -41,11 +40,6 @@ jobs:
         id: InstallDepsFilms
         run: npm ci --also=dev
         working-directory: ./micros/films
-
-      - name: Configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: ~ Create env ~
         id: CreateEnv
