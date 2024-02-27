@@ -1,9 +1,9 @@
 name: Subir codigo TEST
-on: push
-# on:
-#   push:
-#     branches:
-#       - main
+# on: push
+on:
+  push:
+    branches:
+      - main
 env:
   DEPLOYMENT_ENV: staging
   # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_TEST }}
