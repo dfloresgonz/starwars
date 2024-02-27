@@ -3,61 +3,62 @@ service: starwars-backend-peopletypes
 configValidationMode: error
 
 provider:
-    name: aws
-    runtime: nodejs18.x
-    stage: ${opt:stage, 'test'}
-    region: us-east-1
-    iam:
-        role:
-            managedPolicies:
-                - arn:aws:iam::aws:policy/AWSLambda_FullAccess
-                - arn:aws:iam::aws:policy/SecretsManagerReadWrite
-    environment: ${file(../../libs/configs.js)}
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'test'}
+  region: us-east-1
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+        - arn:aws:iam::aws:policy/AmazonSQSFullAccess
+  environment: ${file(../../libs/configs.js)}
 
 package:
-    individually: true
-    patterns:
-        - '!node_modules/**'
-        - '!./**'
+  individually: true
+  patterns:
+    - '!node_modules/**'
+    - '!./**'
 
 plugins:
-    - serverless-offline
-    # - serverless-openapi-documentation
-    - serverless-esbuild
+  - serverless-offline
+  # - serverless-openapi-documentation
+  - serverless-esbuild
 
 custom:
-    esbuild:
-        bundle: true
-        minify: true
-    # documentation: ${file(serverless.doc.yml):documentation}
+  esbuild:
+    bundle: true
+    minify: true
+  # documentation: ${file(serverless.doc.yml):documentation}
 
 functions:
-    listPeople:
-        handler: get-all-people/handler.method
-        timeout: 8
-        events:
-            - http:
-                  method: get
-                  path: api/general/listPeople
-        layers:
-            - ${cf:layers5-dev.Dependencias5LayerExport}
+  listPeople:
+    handler: get-all-people/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: get
+          path: api/general/listPeople
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}
 
-    createPerson:
-        handler: create-new-person/controller/handler.method
-        timeout: 8
-        events:
-            - http:
-                  method: post
-                  path: api/general/createPerson
-        layers:
-            - ${cf:layers5-dev.Dependencias5LayerExport}
+  createPerson:
+    handler: create-new-person/controller/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: post
+          path: api/general/createPerson
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}
 
-    listPeopleSWAPI:
-        handler: get-people-swapi/handler.method
-        timeout: 8
-        events:
-            - http:
-                  method: get
-                  path: api/general/listPeopleSWAPI
-        layers:
-            - ${cf:layers5-dev.Dependencias5LayerExport}
+  listPeopleSWAPI:
+    handler: get-people-swapi/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: get
+          path: api/general/listPeopleSWAPI
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}

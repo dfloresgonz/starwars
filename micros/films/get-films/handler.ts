@@ -1,7 +1,6 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
 
 import { Rpta } from './types';
-import { sumar } from '../../../libs/Calculo';
 import { log } from '../../../libs/helpers/log';
 
 const response: APIGatewayProxyResult = {
@@ -14,7 +13,7 @@ const response: APIGatewayProxyResult = {
 
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-        const suma: number = sumar(14, 28);
+        const suma: number = 1;
 
         const rpta: Rpta = {
             suma,

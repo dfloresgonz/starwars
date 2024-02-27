@@ -6,10 +6,14 @@ import {
 
 import { getPeoples } from './logic';
 import { People, Rpta } from './types';
-import { sumar } from '../../../libs/Calculo';
+import { database } from '../../../libs/helpers/database';
+import { handleError } from '../../../libs/helpers/errors';
+import { getColegio } from '../../../libs/helpers/getColegio';
 import { log } from '../../../libs/helpers/log';
+import { MessagesQueueBuilder } from '../../../libs/factories/Messages/MessagesQueueBuilder';
+import { MessageQueueRequest } from '../../../libs/factories/Messages/MessageQueue';
 
-const response: APIGatewayProxyResult = {
+let response: APIGatewayProxyResult = {
     statusCode: 200,
     headers: {
         'Access-Control-Allow-Origin': '*',
@@ -21,27 +25,41 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
     try {
         const query: APIGatewayProxyEventQueryStringParameters = event.queryStringParameters || {};
 
+        const colegio: string = getColegio(event.headers);
+
         const foo: string = query.foo || '';
         const age: string = query.age || '';
 
         log('data:', { foo, age });
         log('log...:', 'new');
 
-        const resp: People[] = await getPeoples();
-        const suma = sumar(4, 10);
+        const resp: People[] = await getPeoples(colegio);
+        const suma = 12;
 
         const rpta: Rpta = {
             suma,
             datos: resp,
         };
 
+        const messageQueue = MessagesQueueBuilder('aws-sqs');
+
+        const input: MessageQueueRequest = {
+            queueUrl: 'diego-test',
+            messageBody: {
+                Message: 'New....',
+                prueba: true,
+                caller: 'dummy3',
+            },
+        };
+
+        const mensaje: string = await messageQueue.send(input);
+        log('send', mensaje);
+
         response.body = JSON.stringify(rpta);
     } catch (err: any) {
-        log('error:', err);
-        response.statusCode = err.status || 500;
-        response.body = JSON.stringify({
-            msj: err.msj || 'Hubo un error',
-        });
+        response = { ...handleError(err) };
+    } finally {
+        await database.endPool();
     }
     return response;
 };

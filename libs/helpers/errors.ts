@@ -1,4 +1,4 @@
-import { log } from './helpers/log';
+import { log } from './log';
 
 export const handleError = (error: any): any => {
     if (!error.cause) {

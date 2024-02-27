@@ -8,12 +8,14 @@
         "dev": "serverless offline",
         "prettier": "prettier --write '**/{libs,micros}/*.ts'",
         "lint": "eslint ./ --ext ts --report-unused-disable-directives --max-warnings 0",
-        "fix": "eslint ./ --ext ts --fix"
+        "fix": "eslint ./ --ext ts --fix",
+        "local": "sls-multi-gateways"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@aws-sdk/client-sqs": "^3.521.0",
         "dotenv": "^16.3.1",
         "node-fetch": "^2.6.12",
         "pg": "^8.11.3"
@@ -38,6 +40,7 @@
         "prettier": "^3.2.5",
         "serverless": "^3.33.0",
         "serverless-esbuild": "^1.46.0",
+        "serverless-localstack": "^1.2.0",
         "serverless-offline": "^12.0.4",
         "ts-jest": "^29.1.1"
     }

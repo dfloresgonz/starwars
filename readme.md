@@ -80,6 +80,10 @@ Backend-->>Front: Response
 
 1.11 No importar nada fuera de la carpeta de la función mas que de `libs/`
 
+1.12 Incluir colegio en los logs
+
+1.13 No se invocaran lambdas directamente, la comunicacion de microservicios se hara por SQS y se debe enviar el caller para indificar quien registro un mensaje en la cola.
+
 ## Documentación
 
 2.1 Documentar cada carpeta con un readme.md
@@ -90,9 +94,11 @@ Backend-->>Front: Response
 
 ## Tests
 
-3.1 Escribir pruebas unitarias
+3.1 Escribir pruebas unitarias (definir alcance)
 
 ## Infraestructura
+
+4.1 Ya no se va a depender de la extension .pe .com para test/prod sino variables de entorno.
 
 ## Librerías npm
 
@@ -105,6 +111,8 @@ Backend-->>Front: Response
 ### Pull requests
 
 ### Code reviews
+
+1. Listado de que revisar
 
 ### Pendientes
 

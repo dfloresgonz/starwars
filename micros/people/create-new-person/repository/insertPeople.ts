@@ -1,11 +1,11 @@
-import { pool } from '../../../../libs/database';
+import { database } from '../../../../libs/helpers/database';
 import { log } from '../../../../libs/helpers/log';
 import { CreatePerson } from '../types';
 
 const text: string =
     'INSERT INTO people (name, birth_year, eye_color, gender, hair_color, skin_color) VALUES ($1,$2,$3,$4,$5,$6)';
 
-export const insertPeople = async (params: CreatePerson): Promise<boolean> => {
+export const insertPeople = async (colegio: string, params: CreatePerson): Promise<boolean> => {
     try {
         const query = {
             text,
@@ -19,7 +19,7 @@ export const insertPeople = async (params: CreatePerson): Promise<boolean> => {
             ],
         };
 
-        const res = await pool.query(query);
+        const res = await database.getPool(colegio).query(query);
         log('insertPeople.rowCount:', res.rowCount);
 
         if (res.rowCount !== 1) return false;

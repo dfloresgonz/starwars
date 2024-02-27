@@ -1,7 +1,7 @@
 import { People } from './types';
-import { pool } from '../../../libs/database';
+import { database } from '../../../libs/helpers/database';
 
-export const getPeople = async (): Promise<People[]> => {
-    const { rows } = await pool.query('SELECT * FROM people');
+export const getPeople = async (colegio: string): Promise<People[]> => {
+    const { rows } = await database.getPool(colegio).query('SELECT * FROM people');
     return rows;
 };

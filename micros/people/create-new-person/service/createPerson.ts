@@ -2,8 +2,8 @@ import { log } from '../../../../libs/helpers/log';
 import { insertPeople } from '../repository/insertPeople';
 import { CreatePerson, Response } from '../types';
 
-export const createPerson = async (params: CreatePerson): Promise<Response> => {
-    const data: boolean = await insertPeople(params);
+export const createPerson = async (colegio: string, params: CreatePerson): Promise<Response> => {
+    const data: boolean = await insertPeople(colegio, params);
 
     log('createPerson.rpta:', data);
 

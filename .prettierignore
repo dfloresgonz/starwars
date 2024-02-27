@@ -3,3 +3,4 @@
 .vscode/
 readme.md
 package.json
+*.yml
