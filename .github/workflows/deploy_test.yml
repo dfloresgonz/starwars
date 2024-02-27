@@ -40,6 +40,11 @@ jobs:
         run: npm ci --also=dev
         working-directory: ./micros/films
 
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
       - name: ~ Create env ~
         id: CreateEnv
         run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_PASS=${{env.BD_PASS}}" > .env.local
