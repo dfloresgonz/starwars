@@ -7,7 +7,6 @@ import {
 import { getPeoples } from './logic';
 import { People, Rpta } from './types';
 import { QUEUE_TEST } from '../../../libs/environment/constants';
-import { QUEUE_URL } from '../../../libs/environment/utilities';
 import { MessageQueueRequest } from '../../../libs/factories/Messages/MessageQueue';
 import { MessagesQueueBuilder } from '../../../libs/factories/Messages/MessagesQueueBuilder';
 import { database } from '../../../libs/helpers/database';
