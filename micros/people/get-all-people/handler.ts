@@ -49,7 +49,7 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
             messageBody: {
                 Message: 'New....',
                 prueba: true,
-                caller: 'dummy3',
+                caller: 'dummy4',
             },
         };
 
