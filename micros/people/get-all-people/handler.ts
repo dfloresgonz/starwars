@@ -12,6 +12,8 @@ import { database } from '../../../libs/helpers/database';
 import { handleError } from '../../../libs/helpers/errors';
 import { getColegio } from '../../../libs/helpers/getColegio';
 import { log } from '../../../libs/helpers/log';
+import { QUEUE_URL } from '../../../libs/environment/utilities';
+import { QUEUE_TEST } from '../../../libs/environment/constants';
 
 let response: APIGatewayProxyResult = {
     statusCode: 200,
@@ -44,7 +46,7 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
         const messageQueue = MessagesQueueBuilder('aws-sqs');
 
         const input: MessageQueueRequest = {
-            queueUrl: 'diego-test',
+            queueUrl: `${QUEUE_URL}${QUEUE_TEST}`,
             messageBody: {
                 Message: 'New....',
                 prueba: true,

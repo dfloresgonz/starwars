@@ -19,3 +19,5 @@ export const isProduction: boolean = deploymentEnv === 'production';
 export const isLocal: boolean = process.env.IS_LOCAL === 'true' || false;
 
 export const CLOUD_PROVIDER: string = process.env.CLOUD_PROVIDER || '';
+
+export const QUEUE_URL: string = process.env.QUEUE_URL || '';
