@@ -6,12 +6,12 @@ import {
 
 import { getPeoples } from './logic';
 import { People, Rpta } from './types';
+import { MessageQueueRequest } from '../../../libs/factories/Messages/MessageQueue';
+import { MessagesQueueBuilder } from '../../../libs/factories/Messages/MessagesQueueBuilder';
 import { database } from '../../../libs/helpers/database';
 import { handleError } from '../../../libs/helpers/errors';
 import { getColegio } from '../../../libs/helpers/getColegio';
 import { log } from '../../../libs/helpers/log';
-import { MessagesQueueBuilder } from '../../../libs/factories/Messages/MessagesQueueBuilder';
-import { MessageQueueRequest } from '../../../libs/factories/Messages/MessageQueue';
 
 let response: APIGatewayProxyResult = {
     statusCode: 200,
