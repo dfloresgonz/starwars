@@ -59,6 +59,14 @@ jobs:
         run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_PASS=${{env.BD_PASS}}" > .env.local
         working-directory: ./libs
 
+      - name: Edit Jest config
+        shell: bash
+        run: |
+          echo $(jq --arg a "${{ matrix.micros }}" '.roots[0] = (<rootDir>/micros/$a)' test.json) > test.json   
+      - name: display
+        run: |
+          cat test.json
+
       # - name: ~ Run tests ~
       #   id: RunTests
       #   run: npm test
