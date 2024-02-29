@@ -62,10 +62,7 @@ jobs:
       - name: Edit Jest config
         shell: bash
         run: |
-          echo $(jq --arg a "${{ matrix.micros }}" '.roots[0] = "<rootDir>/micros/\($a)"' jest.config.json) > jest.config.json   
-      - name: display
-        run: |
-          cat jest.config.json
+          echo $(jq --arg micro "${{ matrix.micros }}" '.roots[0] = "<rootDir>/micros/\($micro)"' jest.config.json) > jest.config.json
 
       - name: ~ Run tests ~
         id: RunTests
