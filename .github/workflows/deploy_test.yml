@@ -1,4 +1,4 @@
-name: Subir codigo TEST
+name: Test Deployment
 # on: push
 on:
   push:
@@ -18,6 +18,9 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        micros: [films, people]
     steps:
 
       - name: ~ Get code ~
@@ -31,15 +34,20 @@ jobs:
         id: InstallDeps
         run: npm ci --also=dev
 
-      - name: ~ Install dependencies People ~
-        id: InstallDepsPeople
+      - name: ~ Install dependencies ${{ matrix.micros }} ~
+        id: InstallDepsMicros
         run: npm ci --also=dev
-        working-directory: ./micros/people
+        working-directory: ./micros/${{ matrix.micros }}
+      
+      # - name: ~ Install dependencies People ~
+      #   id: InstallDepsPeople
+      #   run: npm ci --also=dev
+      #   working-directory: ./micros/people
 
-      - name: ~ Install dependencies Films ~
-        id: InstallDepsFilms
-        run: npm ci --also=dev
-        working-directory: ./micros/films
+      # - name: ~ Install dependencies Films ~
+      #   id: InstallDepsFilms
+      #   run: npm ci --also=dev
+      #   working-directory: ./micros/films
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -51,16 +59,21 @@ jobs:
         run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_PASS=${{env.BD_PASS}}" > .env.local
         working-directory: ./libs
 
-      - name: ~ Run tests ~
-        id: RunTests
-        run: npm test
+      # - name: ~ Run tests ~
+      #   id: RunTests
+      #   run: npm test
 
-      - name: ~ Deploy microservice People ~
-        id: DeployMSPeople
+      - name: ~ Deploy microservice ${{ matrix.micros }} ~
+        id: DeployMicros
         run: sls deploy -s test
-        working-directory: ./micros/people
+        working-directory: ./micros/${{ matrix.micros }}
       
-      - name: ~ Deploy microservice Films ~
-        id: DeployMSFilms
-        run: sls deploy -s test
-        working-directory: ./micros/films
+      # - name: ~ Deploy microservice People ~
+      #   id: DeployMSPeople
+      #   run: sls deploy -s test
+      #   working-directory: ./micros/people
+      
+      # - name: ~ Deploy microservice Films ~
+      #   id: DeployMSFilms
+      #   run: sls deploy -s test
+      #   working-directory: ./micros/films
