@@ -6,6 +6,7 @@ on:
       - main
 env:
   DEPLOYMENT_ENV: staging
+  DEPLOY_ENV: test
   # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_TEST }}
   # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_TEST }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_PROD }}
@@ -38,16 +39,6 @@ jobs:
         id: InstallDepsMicros
         run: npm ci --also=dev
         working-directory: ./micros/${{ matrix.micros }}
-      
-      # - name: ~ Install dependencies People ~
-      #   id: InstallDepsPeople
-      #   run: npm ci --also=dev
-      #   working-directory: ./micros/people
-
-      # - name: ~ Install dependencies Films ~
-      #   id: InstallDepsFilms
-      #   run: npm ci --also=dev
-      #   working-directory: ./micros/films
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -70,15 +61,5 @@ jobs:
 
       - name: ~ Deploy microservice ${{ matrix.micros }} ~
         id: DeployMicros
-        run: sls deploy -s test
+        run: sls deploy -s ${{ env.DEPLOY_ENV }}
         working-directory: ./micros/${{ matrix.micros }}
-      
-      # - name: ~ Deploy microservice People ~
-      #   id: DeployMSPeople
-      #   run: sls deploy -s test
-      #   working-directory: ./micros/people
-      
-      # - name: ~ Deploy microservice Films ~
-      #   id: DeployMSFilms
-      #   run: sls deploy -s test
-      #   working-directory: ./micros/films
