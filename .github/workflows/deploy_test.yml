@@ -67,12 +67,9 @@ jobs:
     runs-on: ubuntu-latest
     # needs: deploy
     steps:
-      - name: Localizar 2
-        id: localizarDos
-        run: pwd
-      - name: ~ Display structure of downloaded files ~
-        id: listarDos
-        run: ls -R
+      - name: ~ Get code ~
+        id: GetCode
+        uses: actions/checkout/@v4
       - name: Actualizar BDs
         id: act_bds
         if: always()
