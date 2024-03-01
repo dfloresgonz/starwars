@@ -71,6 +71,6 @@ jobs:
         id: act_bds
         if: always()
         run: |
-          node ./github/scripts/act_bds.sh ${{env.HOST_BD}} ${{env.USER_BD}} ${{env.BD_PASS}}
+          exec ./github/scripts/act_bds.sh ${{env.HOST_BD}} ${{env.USER_BD}} ${{env.BD_PASS}}
 
       
