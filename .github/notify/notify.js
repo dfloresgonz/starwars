@@ -56,7 +56,7 @@ ${texto}
     const response = await fetch(WEBHOOK, { method: 'POST', body: data });
     const rpta = await response.json();
 
-    console.log(rpta.thread.name);
+    console.log(rpta);
 
     if (tipo == 'init') {
         const core = require('@actions/core');
