@@ -39,7 +39,7 @@ const FAILED = '\u274c️';
 *Detalle:* ${detalle}
 `
         }
-    } else if (tipo == 'report') { // los
+    } else if (tipo == 'report') {
         WEBHOOK = `${WEBHOOK}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD`
         const steps = JSON.parse(args[5])
         for (const [key, value] of Object.entries(steps)) {
@@ -60,6 +60,8 @@ ${texto}
         }
     } else if (tipo == 'end') { // el ultimo
         const threadId = args[3];
+        const hasFailures = args[4] == 'true';
+        console.log('res>>>', hasFailures, args[4]);
         const messageId = `${threadId.split('/')[3]}.${threadId.split('/')[3]}`;
         WEBHOOK = WEBHOOK_REACT.replace('REEMPLAZAR', messageId);
         //https://getemoji.com
@@ -111,7 +113,7 @@ function getJWT(tipo) {
             key: gkeys.private_key,
             scopes: []
         };
-        if (tipo == 'init') {
+        if (tipo == 'init' || tipo == 'report') {
             jwtParams.scopes = jwtParams.scopes.concat([
                 'https://www.googleapis.com/auth/chat.bot',
             ]);
