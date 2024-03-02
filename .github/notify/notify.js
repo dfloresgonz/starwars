@@ -1,4 +1,5 @@
-const WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g&=messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD'
+const WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD'
+// const WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g&=messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD'
 const SUCCESS = '\u2705️';
 const FAILED = '\u274c️';
 
@@ -21,6 +22,7 @@ const FAILED = '\u274c️';
 *Por:* ${github_data.actor}
 *Repo:* ${github_data.repository}
 *Rama:* ${github_data.ref_name}
+*Detalle:* ${github_data.event.head_commit.message}
 `
         }
     } else if (tipo == 'report') { // los
