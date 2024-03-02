@@ -111,7 +111,7 @@ function getJWT() {
             key: gkeys.private_key,
             subject: 'diego@smiledu.com',
             scopes: [
-                'https://www.googleapis.com/auth/chat.bot',
+                // 'https://www.googleapis.com/auth/chat.bot',
                 'https://www.googleapis.com/auth/chat.import',
                 'https://www.googleapis.com/auth/chat.messages',
                 'https://www.googleapis.com/auth/chat.messages.reactions',
