@@ -84,6 +84,9 @@ ${texto}
 
     const TOKEN = await getJWT(tipo);
     console.log('TOKEN:::', TOKEN);
+
+    if (!TOKEN) throw new Error('No se pudo obtener el token de autenticación');
+
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${TOKEN}`
@@ -114,19 +117,19 @@ function getJWT(tipo) {
             scopes: []
         };
         if (tipo == 'init') {
-            jwtParams.scopes = [
+            jwtParams.scopes = jwtParams.scopes.concat([
                 'https://www.googleapis.com/auth/chat.bot',
                 // 'https://www.googleapis.com/auth/chat.messages',
                 // 'https://www.googleapis.com/auth/chat.messages.create',
-            ]
+            ]);
         } else if (tipo == 'end') {
-            jwtParams.scopes = [
+            jwtParams.scopes = jwtParams.scopes.concat([
                 'https://www.googleapis.com/auth/chat.bot',
                 'https://www.googleapis.com/auth/chat.import',
                 'https://www.googleapis.com/auth/chat.messages',
                 'https://www.googleapis.com/auth/chat.messages.reactions',
                 'https://www.googleapis.com/auth/chat.messages.reactions.create'
-            ]
+            ]);
         }
         //);
         const jwtClient = new google.auth.JWT(jwtParams);
