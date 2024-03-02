@@ -17,8 +17,24 @@ env:
   USER_BD: ${{ vars.USER_BD_TEST }}
   BD_PASS: ${{ secrets.BD_PASS_TEST }}
 jobs:
+  notifier:
+    runs-on: ubuntu-latest
+    outputs:
+      gchatthreadid: ${{ steps.launchNotify.outputs.gchatthreadid }}
+    steps:
+      - name: ~ Get code ~
+        id: GetCode
+        uses: actions/checkout/@v4
+      - name: Install Notify
+        run: npm ci
+        working-directory: .github/notify
+      - name: Init Notify
+        id: launchNotify
+        run: |
+          node .github/notify/notify.js tipo=init '${{ toJson(github) }}'
   # deploy:
   #   runs-on: ubuntu-latest
+  #   needs: notifier
   #   strategy:
   #     matrix:
   #       micros: [films, people]
@@ -65,9 +81,7 @@ jobs:
   #       working-directory: ./micros/${{ matrix.micros }}
   act_bd:
     runs-on: ubuntu-latest
-    outputs:
-      gchatthreadid: ${{ steps.launchNotify.outputs.gchatthreadid }}
-    # needs: deploy
+    needs: notifier
     steps:
       - name: ~ Get code ~
         id: GetCode
@@ -75,10 +89,6 @@ jobs:
       - name: Install Notify
         run: npm ci
         working-directory: .github/notify
-      - name: Init Notify
-        id: launchNotify
-        run: |
-          node .github/notify/notify.js tipo=init '${{ toJson(github) }}'
       - name: Actualizar BDs
         id: act_bds
         run: |
@@ -91,4 +101,4 @@ jobs:
       - name: Notify
         id: notify
         run: |
-          node .github/notify/notify.js tipo=report ${{ github.job }} ${{ job.status }} '${{ toJson(steps) }}' ${{ steps.launchNotify.outputs.gchatthreadid }}
+          node .github/notify/notify.js tipo=report ${{ github.job }} ${{ job.status }} '${{ toJson(steps) }}' ${{ needs.notifier.outputs.gchatthreadid }}
