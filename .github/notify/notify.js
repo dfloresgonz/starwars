@@ -133,8 +133,8 @@ function getJWT(tipo) {
 
         const jwtClient = new google.auth.JWT(jwtParams);
         try {
-            const { tokens: access_token } = await jwtClient.authorize();
-            return resolve(access_token);
+            const auth = await jwtClient.authorize();
+            return resolve(auth.access_token);
         } catch (error) {
             console.log('error.getJWT:::', error);
             return reject(error);
