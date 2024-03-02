@@ -17,10 +17,11 @@ env:
   USER_BD: ${{ vars.USER_BD_TEST }}
   BD_PASS: ${{ secrets.BD_PASS_TEST }}
 jobs:
-  notifier:
+  starter:
     runs-on: ubuntu-latest
     outputs:
       gchatthreadid: ${{ steps.launchNotify.outputs.gchatthreadid }}
+      change_db: ${{ steps.changesDatabase.outputs.change_db }}
     steps:
       - name: ~ Get code ~
         id: GetCode
@@ -32,9 +33,17 @@ jobs:
         id: launchNotify
         run: |
           node .github/notify/notify.js tipo=init '${{ toJson(github) }}'
+      - name: Check DB changes
+        id: changesDatabase
+        run: |
+          if [ -s .github/scripts/act_bds_sql.sql ]; then
+          echo "change_db=true" >> $GITHUB_OUTPUT
+          else
+          echo "change_db=false" >> $GITHUB_OUTPUT
+          fi
   # deploy:
   #   runs-on: ubuntu-latest
-  #   needs: notifier
+  #   needs: starter
   #   strategy:
   #     matrix:
   #       micros: [films, people]
@@ -81,7 +90,8 @@ jobs:
   #       working-directory: ./micros/${{ matrix.micros }}
   act_bd:
     runs-on: ubuntu-latest
-    needs: notifier
+    needs: starter
+    if: needs.starter.outputs.change_db == 'true'
     steps:
       - name: ~ Get code ~
         id: GetCode
@@ -92,13 +102,10 @@ jobs:
       - name: Actualizar BDs
         id: act_bds
         run: |
-          if [ -s .github/scripts/act_bds_sql.sql ]; then
-            echo "Hay cambios en la BD"
-            exec .github/scripts/act_bds.sh ${{env.HOST_BD}} ${{env.USER_BD}} ${{env.BD_PASS}}
-          else
-            echo "No hay cambios en la BD"
-          fi
+          echo "Por iniciar proceso ..."
+          exec .github/scripts/act_bds.sh ${{env.HOST_BD}} ${{env.USER_BD}} ${{env.BD_PASS}}
+          echo "Proceso finalizado"
       - name: Notify
         id: notify
         run: |
-          node .github/notify/notify.js tipo=report ${{ github.job }} ${{ job.status }} '${{ toJson(steps) }}' ${{ needs.notifier.outputs.gchatthreadid }}
+          node .github/notify/notify.js tipo=report ${{ github.job }} ${{ job.status }} '${{ toJson(steps) }}' ${{ needs.starter.outputs.gchatthreadid }}
