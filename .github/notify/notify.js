@@ -114,7 +114,7 @@ function getJWT(tipo) {
         // const gkeys = require('./serv_accnt.json');
         let jwtParams = {
             email: process.env.GAUTH_CLIENT_EMAIL,
-            key: process.env.GAUTH_PRIVATE_KEY,
+            key: process.env.GAUTH_PRIVATE_KEY.replace(/\\n/gm, "\n"),
             scopes: []
         };
         if (tipo == 'init' || tipo == 'report') {
