@@ -17,7 +17,7 @@ const FAILED = '\u274c️';
         const github_data = JSON.parse(args[3])
         params = {
             'text':
-                `Workflow *${github.workflow}* iniciado:\n
+                `Workflow *${github_data.workflow}* iniciado:\n
 *Por:* ${github_data.actor}
 *Repo:* ${github_data.repository}
 *Rama:* ${github_data.ref_name}
