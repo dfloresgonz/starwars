@@ -130,4 +130,4 @@ jobs:
       - name: Notify
         id: notify
         run: |
-          node .github/notify/notify.js tipo=end ${{ needs.starter.outputs.gchatthreadid }}
+          node .github/notify/notify.js tipo=end ${{ needs.starter.outputs.gchatthreadid }} ${{ contains(needs.*.result, 'failure') }}
