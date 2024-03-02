@@ -123,8 +123,9 @@ function getJWT(tipo) {
                 // 'https://www.googleapis.com/auth/chat.messages.create',
             ]);
         } else if (tipo == 'end') {
+            jwtParams.subject = 'diego@smiledu.com';
             jwtParams.scopes = jwtParams.scopes.concat([
-                'https://www.googleapis.com/auth/chat.bot',
+                // 'https://www.googleapis.com/auth/chat.bot',
                 'https://www.googleapis.com/auth/chat.import',
                 'https://www.googleapis.com/auth/chat.messages',
                 'https://www.googleapis.com/auth/chat.messages.reactions',
