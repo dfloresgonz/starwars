@@ -16,13 +16,21 @@ const FAILED = '\u274c️';
 
     if (tipo == 'init') { // el 1ero
         const github_data = JSON.parse(args[3])
+        let detalle = '';
+        if (github_data.event.head_commit) {
+            detalle = github_data.event.head_commit.message;
+        } else if (github_data.event.release) {
+            detalle = `Release - ${github_data.event.release.tag_name}`;
+        } else {
+            detalle = 'desconocido';
+        }
         params = {
             'text':
                 `Workflow *${github_data.workflow}* iniciado:\n
 *Por:* ${github_data.actor}
 *Repo:* ${github_data.repository}
 *Rama:* ${github_data.ref_name}
-*Detalle:* ${github_data.event.head_commit.message}
+*Detalle:* ${detalle}
 `
         }
     } else if (tipo == 'report') { // los
