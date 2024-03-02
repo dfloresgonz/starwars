@@ -40,7 +40,7 @@ const FAILED = '\u274c️';
 `
         }
     } else if (tipo == 'report') {
-        WEBHOOK = `${WEBHOOK}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD`
+        WEBHOOK = `${WEBHOOK}?messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD`
         const steps = JSON.parse(args[5])
         for (const [key, value] of Object.entries(steps)) {
             texto += `${value.outcome == 'success' ? SUCCESS : FAILED} ${key}\n`
@@ -60,14 +60,14 @@ ${texto}
         }
     } else if (tipo == 'end') { // el ultimo
         const threadId = args[3];
-        const hasFailures = args[4] == 'true';
+        const hasFailures = args[4] === 'true';
         console.log('res>>>', hasFailures, args[4]);
         const messageId = `${threadId.split('/')[3]}.${threadId.split('/')[3]}`;
         WEBHOOK = WEBHOOK_REACT.replace('REEMPLAZAR', messageId);
         //https://getemoji.com
         params = {
             emoji: {
-                'unicode': '🟢'
+                'unicode': !hasFailures ? '🟢' : '🔴'
             },
         }
     }
