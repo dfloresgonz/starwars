@@ -15,8 +15,8 @@ const FAILED = '\u274c️';
     const tipo = args[2].split('=')[1]
     console.log('tipo:', tipo);
 
-    console.log('GAUTH_PRIVATE_KEY:', process.env.GAUTH_PRIVATE_KEY);
-    console.log('GAUTH_CLIENT_EMAIL:', process.env.GAUTH_CLIENT_EMAIL);
+    // console.log('GAUTH_PRIVATE_KEY:', process.env.GAUTH_PRIVATE_KEY);
+    // console.log('GAUTH_CLIENT_EMAIL:', process.env.GAUTH_CLIENT_EMAIL);
 
     let texto = ``
     let params = {}
@@ -111,10 +111,10 @@ ${texto}
 function getJWT(tipo) {
     return new Promise(async (resolve, reject) => {
         const { google } = require('googleapis');
-        const gkeys = require('./serv_accnt.json');
+        // const gkeys = require('./serv_accnt.json');
         let jwtParams = {
-            email: gkeys.client_email,
-            key: gkeys.private_key,
+            email: process.env.GAUTH_CLIENT_EMAIL,
+            key: process.env.GAUTH_PRIVATE_KEY,
             scopes: []
         };
         if (tipo == 'init' || tipo == 'report') {
