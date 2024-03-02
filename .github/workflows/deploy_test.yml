@@ -65,11 +65,20 @@ jobs:
   #       working-directory: ./micros/${{ matrix.micros }}
   act_bd:
     runs-on: ubuntu-latest
+    outputs:
+      gchatthreadid: ${{ steps.launchNotify.outputs.gchatthreadid }}
     # needs: deploy
     steps:
       - name: ~ Get code ~
         id: GetCode
         uses: actions/checkout/@v4
+      - name: Install Notify
+        run: npm ci
+        working-directory: .github/notifiy
+      - name: Init Notify
+        id: launchNotify
+        run: |
+          node .github/notify/notify.js tipo=init '${{ toJson(github) }}'
       - name: Actualizar BDs
         id: act_bds
         run: |
@@ -79,5 +88,7 @@ jobs:
           else
             echo "No hay cambios en la BD"
           fi
-
-      
+      - name: Notify
+        id: notify
+        run: |
+          node .github/notify/notify.js tipo=report ${{ github.job }} ${{ job.status }} '${{ toJson(steps) }}' ${{ steps.launchNotify.outputs.gchatthreadid }}
