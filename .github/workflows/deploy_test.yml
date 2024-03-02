@@ -93,6 +93,7 @@ jobs:
 
       - name: Notify
         id: notify
+        if: ${{ always() && !cancelled() }}
         run: |
           node .github/notify/notify.js tipo=report "${{ github.job }} > ${{ matrix.micros }}" ${{ job.status }} '${{ toJson(steps) }}' ${{ needs.starter.outputs.gchatthreadid }}
   act_bd:
@@ -114,6 +115,7 @@ jobs:
           echo "Proceso finalizado"
       - name: Notify
         id: notify
+        if: ${{ always() && !cancelled() }}
         run: |
           node .github/notify/notify.js tipo=report ${{ github.job }} ${{ job.status }} '${{ toJson(steps) }}' ${{ needs.starter.outputs.gchatthreadid }}
   finalizer:
