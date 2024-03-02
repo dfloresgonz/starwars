@@ -1,5 +1,9 @@
-let WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g'
-// const WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g&=messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD'
+const SPACE = 'AAAApXyNYLA';
+const KEY = 'AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI';
+const TOKEN = 'PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g';
+let WEBHOOK = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages?key=${KEY}&token=${TOKEN}`;
+let WEBHOOK_REACT = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages/REEMPLAZAR/reactions?key=${KEY}&token=${TOKEN}`;
+// let WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g'
 const SUCCESS = '\u2705️';
 const FAILED = '\u274c️';
 
@@ -50,6 +54,20 @@ ${texto}
         if (args[6]) {
             params.thread = {
                 name: args[6]
+            }
+        }
+    } else if (tipo == 'end') { // el ultimo
+        const threadId = args[3];
+        const messageId = `${threadId.split('/')[3]}.${threadId.split('/')[3]}`;
+        WEBHOOK = WEBHOOK_REACT.replace('REEMPLAZAR', messageId);
+        params = {
+            emoji: {
+                'unicode': SUCCESS
+            },
+            name: 'GithubActions CI/CD Pipeline',
+            user: {
+                name: 'GithubActions',
+                type: 'BOT'
             }
         }
     }
