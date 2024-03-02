@@ -101,24 +101,41 @@ ${texto}
 })();
 
 function getJWT() {
-    return new Promise(function (resolve, reject) {
+    return new Promise(async (resolve, reject) => {
         const { google } = require('googleapis');
         const gkeys = require('./serv_accnt.json');
-        let jwtClient = new google.auth.JWT(
-            gkeys.client_email,
-            null,
-            gkeys.private_key, ['https://www.googleapis.com/auth/chat.bot',
-            'https://www.googleapis.com/auth/chat.import', 'https://www.googleapis.com/auth/chat.messages', 'https://www.googleapis.com/auth/chat.messages.reactions',
-            'https://www.googleapis.com/auth/chat.messages.reactions.create']
-        );
+        let jwtParams =
+        //new google.auth.JWT(
+        {
+            email: gkeys.client_email,
+            key: gkeys.private_key,
+            subject: 'diego@smiledu.com',
+            scopes: [
+                'https://www.googleapis.com/auth/chat.bot',
+                'https://www.googleapis.com/auth/chat.import',
+                'https://www.googleapis.com/auth/chat.messages',
+                'https://www.googleapis.com/auth/chat.messages.reactions',
+                'https://www.googleapis.com/auth/chat.messages.reactions.create'
+            ]
+        };
+        //);
+        const jwtClient = new google.auth.JWT(jwtParams);
+        try {
+            const { tokens: access_token } = await jwtClient.authorize();
+            return resolve(access_token);
+        } catch (error) {
+            console.log('error.getJWT:::', error);
+            return reject(error);
+        }
 
-        jwtClient.authorize(function (err, tokens) {
-            if (err) {
-                console.log('Error create JWT hangoutchat');
-                return reject(err);
-            } else {
-                return resolve(tokens.access_token);
-            }
-        });
+        // jwtClient.authorize(function (err, tokens) {
+        //     if (err) {
+        //         console.log('getJWT.jwtClient.authorize:::::: Error create JWT google chat API');
+        //         console.log('err:::', err);
+        //         return reject(err);
+        //     } else {
+        //         return resolve(tokens.access_token);
+        //     }
+        // });
     });
 }
