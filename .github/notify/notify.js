@@ -82,7 +82,8 @@ ${texto}
 
     const fetch = require('node-fetch')
 
-    const TOKEN = await getJWT();
+    const TOKEN = await getJWT(tipo);
+    console.log('TOKEN:::', TOKEN);
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${TOKEN}`
@@ -100,7 +101,7 @@ ${texto}
 
 })();
 
-function getJWT() {
+function getJWT(tipo) {
     return new Promise(async (resolve, reject) => {
         const { google } = require('googleapis');
         const gkeys = require('./serv_accnt.json');
@@ -110,14 +111,21 @@ function getJWT() {
             email: gkeys.client_email,
             key: gkeys.private_key,
             subject: 'diego@smiledu.com',
-            scopes: [
-                // 'https://www.googleapis.com/auth/chat.bot',
+            scopes: []
+        };
+        if (tipo == 'init') {
+            jwtParams.scopes = [
+                'https://www.googleapis.com/auth/chat.bot',
+                'https://www.googleapis.com/auth/chat.messages'
+            ]
+        } else if (tipo == 'end') {
+            jwtParams.scopes = [
                 'https://www.googleapis.com/auth/chat.import',
                 'https://www.googleapis.com/auth/chat.messages',
                 'https://www.googleapis.com/auth/chat.messages.reactions',
                 'https://www.googleapis.com/auth/chat.messages.reactions.create'
             ]
-        };
+        }
         //);
         const jwtClient = new google.auth.JWT(jwtParams);
         try {
