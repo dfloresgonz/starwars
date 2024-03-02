@@ -1,8 +1,10 @@
 const SPACE = 'AAAApXyNYLA';
 const KEY = 'AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI';
 const TOKEN = 'PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g';
-let WEBHOOK = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages?key=${KEY}&token=${TOKEN}`;
-let WEBHOOK_REACT = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages/REEMPLAZAR/reactions?key=${KEY}&token=${TOKEN}`;
+// let WEBHOOK = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages?key=${KEY}&token=${TOKEN}`;
+// let WEBHOOK_REACT = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages/REEMPLAZAR/reactions?key=${KEY}&token=${TOKEN}`;
+let WEBHOOK = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages`;
+let WEBHOOK_REACT = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages/REEMPLAZAR/reactions`;
 // let WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g'
 const SUCCESS = '\u2705️';
 const FAILED = '\u274c️';
@@ -80,7 +82,13 @@ ${texto}
 
     const fetch = require('node-fetch')
 
-    const response = await fetch(WEBHOOK, { method: 'POST', body: data });
+    const TOKEN = await getJWT();
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${TOKEN}`
+    };
+
+    const response = await fetch(WEBHOOK, { method: 'POST', headers, body: data });
     const rpta = await response.json();
 
     console.log('rpta::', rpta);
@@ -91,3 +99,24 @@ ${texto}
     }
 
 })();
+
+function getJWT() {
+    return new Promise(function (resolve, reject) {
+        const { google } = require('googleapis');
+        const gkeys = require('./serv_accnt.json');
+        let jwtClient = new google.auth.JWT(
+            gkeys.client_email,
+            null,
+            gkeys.private_key, ['https://www.googleapis.com/auth/chat.bot']
+        );
+
+        jwtClient.authorize(function (err, tokens) {
+            if (err) {
+                console.log('Error create JWT hangoutchat');
+                return reject(err);
+            } else {
+                return resolve(tokens.access_token);
+            }
+        });
+    });
+}
