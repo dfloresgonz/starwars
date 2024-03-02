@@ -15,6 +15,9 @@ const FAILED = '\u274c️';
     const tipo = args[2].split('=')[1]
     console.log('tipo:', tipo);
 
+    console.log('GAUTH_PRIVATE_KEY:', process.env.GAUTH_PRIVATE_KEY);
+    console.log('GAUTH_CLIENT_EMAIL:', process.env.GAUTH_CLIENT_EMAIL);
+
     let texto = ``
     let params = {}
 
@@ -127,12 +130,11 @@ function getJWT(tipo) {
                 'https://www.googleapis.com/auth/chat.messages.reactions.create'
             ]);
         };
-        // console.log('jwtParams:::', jwtParams);
+
         const jwtClient = new google.auth.JWT(jwtParams);
         try {
-            const obj = await jwtClient.authorize();
-            console.log('obj::', obj);
-            return resolve(obj.access_token);
+            const { tokens: access_token } = await jwtClient.authorize();
+            return resolve(access_token);
         } catch (error) {
             console.log('error.getJWT:::', error);
             return reject(error);
