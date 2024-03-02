@@ -115,7 +115,7 @@ function getJWT(tipo) {
         };
         if (tipo == 'init') {
             jwtParams.scopes = [
-                'https://www.googleapis.com/auth/chat.bot',
+                // 'https://www.googleapis.com/auth/chat.bot',
                 'https://www.googleapis.com/auth/chat.messages'
             ]
         } else if (tipo == 'end') {
