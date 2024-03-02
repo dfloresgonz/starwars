@@ -110,16 +110,18 @@ function getJWT(tipo) {
         {
             email: gkeys.client_email,
             key: gkeys.private_key,
-            subject: 'diego@smiledu.com',
+            // subject: 'diego@smiledu.com',
             scopes: []
         };
         if (tipo == 'init') {
             jwtParams.scopes = [
-                // 'https://www.googleapis.com/auth/chat.bot',
-                'https://www.googleapis.com/auth/chat.messages'
+                'https://www.googleapis.com/auth/chat.bot',
+                // 'https://www.googleapis.com/auth/chat.messages',
+                // 'https://www.googleapis.com/auth/chat.messages.create',
             ]
         } else if (tipo == 'end') {
             jwtParams.scopes = [
+                'https://www.googleapis.com/auth/chat.bot',
                 'https://www.googleapis.com/auth/chat.import',
                 'https://www.googleapis.com/auth/chat.messages',
                 'https://www.googleapis.com/auth/chat.messages.reactions',
