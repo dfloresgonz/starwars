@@ -132,10 +132,12 @@ function getJWT(tipo) {
             ]);
         }
         //);
+        console.log('jwtParams:::', jwtParams);
         const jwtClient = new google.auth.JWT(jwtParams);
         try {
-            const { tokens: access_token } = await jwtClient.authorize();
-            return resolve(access_token);
+            const obj = await jwtClient.authorize();
+            console.log('obj::', obj);
+            return resolve(obj.access_token);
         } catch (error) {
             console.log('error.getJWT:::', error);
             return reject(error);
