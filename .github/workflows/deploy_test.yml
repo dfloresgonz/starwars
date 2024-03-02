@@ -72,8 +72,12 @@ jobs:
         uses: actions/checkout/@v4
       - name: Actualizar BDs
         id: act_bds
-        if: always()
         run: |
-          exec ./.github/scripts/act_bds.sh ${{env.HOST_BD}} ${{env.USER_BD}} ${{env.BD_PASS}}
+          if [ -s .github/scripts/act_bds_sql.sql ]; then
+            echo "Hay cambios en la BD"
+            exec .github/scripts/act_bds.sh ${{env.HOST_BD}} ${{env.USER_BD}} ${{env.BD_PASS}}
+          else
+            echo "No hay cambios en la BD"
+          fi
 
       
