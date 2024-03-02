@@ -118,7 +118,8 @@ jobs:
           node .github/notify/notify.js tipo=report ${{ github.job }} ${{ job.status }} '${{ toJson(steps) }}' ${{ needs.starter.outputs.gchatthreadid }}
   finalizer:
     runs-on: ubuntu-latest
-    needs: [ starter ]
+    needs: [ starter, act_bd ]
+    if: ${{ always() && !cancelled() }}
     steps:
       - name: ~ Get code ~
         id: GetCode
