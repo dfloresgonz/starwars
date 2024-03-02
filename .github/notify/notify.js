@@ -62,9 +62,10 @@ ${texto}
         const threadId = args[3];
         const messageId = `${threadId.split('/')[3]}.${threadId.split('/')[3]}`;
         WEBHOOK = WEBHOOK_REACT.replace('REEMPLAZAR', messageId);
+        //https://getemoji.com
         params = {
             emoji: {
-                'unicode': '😁'
+                'unicode': '🟢'
             },
             name: 'GithubActions CI/CD Pipeline',
             user: {
