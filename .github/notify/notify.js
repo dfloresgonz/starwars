@@ -107,7 +107,9 @@ function getJWT() {
         let jwtClient = new google.auth.JWT(
             gkeys.client_email,
             null,
-            gkeys.private_key, ['https://www.googleapis.com/auth/chat.bot']
+            gkeys.private_key, ['https://www.googleapis.com/auth/chat.bot',
+            'https://www.googleapis.com/auth/chat.import', 'https://www.googleapis.com/auth/chat.messages', 'https://www.googleapis.com/auth/chat.messages.reactions',
+            'https://www.googleapis.com/auth/chat.messages.reactions.create']
         );
 
         jwtClient.authorize(function (err, tokens) {
