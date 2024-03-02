@@ -1,4 +1,4 @@
-const WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD'
+let WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g'
 // const WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g&=messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD'
 const SUCCESS = '\u2705️';
 const FAILED = '\u274c️';
@@ -26,6 +26,7 @@ const FAILED = '\u274c️';
 `
         }
     } else if (tipo == 'report') { // los
+        WEBHOOK = `${WEBHOOK}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD`
         const steps = JSON.parse(args[5])
         for (const [key, value] of Object.entries(steps)) {
             texto += `${value.outcome == 'success' ? SUCCESS : FAILED} ${key}\n`
@@ -56,7 +57,7 @@ ${texto}
     const response = await fetch(WEBHOOK, { method: 'POST', body: data });
     const rpta = await response.json();
 
-    console.log(rpta);
+    console.log('rpta::', rpta);
 
     if (tipo == 'init') {
         const core = require('@actions/core');
