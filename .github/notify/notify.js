@@ -67,11 +67,6 @@ ${texto}
             emoji: {
                 'unicode': '🟢'
             },
-            name: 'GithubActions CI/CD Pipeline',
-            user: {
-                name: 'GithubActions',
-                type: 'BOT'
-            }
         }
     }
 
