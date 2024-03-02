@@ -64,7 +64,7 @@ ${texto}
         WEBHOOK = WEBHOOK_REACT.replace('REEMPLAZAR', messageId);
         params = {
             emoji: {
-                'unicode': SUCCESS
+                'unicode': '😁'
             },
             name: 'GithubActions CI/CD Pipeline',
             user: {
@@ -83,7 +83,7 @@ ${texto}
     const fetch = require('node-fetch')
 
     const TOKEN = await getJWT(tipo);
-    console.log('TOKEN:::', TOKEN);
+    // console.log('TOKEN:::', TOKEN);
 
     if (!TOKEN) throw new Error('No se pudo obtener el token de autenticación');
 
@@ -113,19 +113,15 @@ function getJWT(tipo) {
         {
             email: gkeys.client_email,
             key: gkeys.private_key,
-            // subject: 'diego@smiledu.com',
             scopes: []
         };
         if (tipo == 'init') {
             jwtParams.scopes = jwtParams.scopes.concat([
                 'https://www.googleapis.com/auth/chat.bot',
-                // 'https://www.googleapis.com/auth/chat.messages',
-                // 'https://www.googleapis.com/auth/chat.messages.create',
             ]);
         } else if (tipo == 'end') {
             jwtParams.subject = 'diego@smiledu.com';
             jwtParams.scopes = jwtParams.scopes.concat([
-                // 'https://www.googleapis.com/auth/chat.bot',
                 'https://www.googleapis.com/auth/chat.import',
                 'https://www.googleapis.com/auth/chat.messages',
                 'https://www.googleapis.com/auth/chat.messages.reactions',
@@ -133,7 +129,7 @@ function getJWT(tipo) {
             ]);
         }
         //);
-        console.log('jwtParams:::', jwtParams);
+        // console.log('jwtParams:::', jwtParams);
         const jwtClient = new google.auth.JWT(jwtParams);
         try {
             const obj = await jwtClient.authorize();
@@ -143,15 +139,5 @@ function getJWT(tipo) {
             console.log('error.getJWT:::', error);
             return reject(error);
         }
-
-        // jwtClient.authorize(function (err, tokens) {
-        //     if (err) {
-        //         console.log('getJWT.jwtClient.authorize:::::: Error create JWT google chat API');
-        //         console.log('err:::', err);
-        //         return reject(err);
-        //     } else {
-        //         return resolve(tokens.access_token);
-        //     }
-        // });
     });
 }
