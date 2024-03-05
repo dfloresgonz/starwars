@@ -6,9 +6,9 @@ import {
 
 import { getPeoples } from './logic';
 import { People, Rpta } from './types';
-import { QUEUE_TEST } from '../../../libs/environment/constants';
-import { MessageQueueRequest } from '../../../libs/factories/Messages/MessageQueue';
-import { MessagesQueueBuilder } from '../../../libs/factories/Messages/MessagesQueueBuilder';
+// import { QUEUE_TEST } from '../../../libs/environment/constants';
+// import { MessageQueueRequest } from '../../../libs/factories/Messages/MessageQueue';
+// import { MessagesQueueBuilder } from '../../../libs/factories/Messages/MessagesQueueBuilder';
 import { database } from '../../../libs/helpers/database';
 import { handleError } from '../../../libs/helpers/errors';
 import { getColegio } from '../../../libs/helpers/getColegio';
@@ -33,6 +33,7 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
         const age: string = query.age || '';
 
         log('READONLY_DB:', process.env.READONLY_DB);
+        log('readonly:', readonly);
         log('data:', { foo, age });
         log('log...:', 'new');
 
@@ -44,19 +45,19 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
             datos: resp,
         };
 
-        const messageQueue = MessagesQueueBuilder('aws-sqs');
+        // const messageQueue = MessagesQueueBuilder('aws-sqs');
 
-        const input: MessageQueueRequest = {
-            queueUrl: QUEUE_TEST,
-            messageBody: {
-                Message: 'New....',
-                prueba: true,
-                caller: 'dummy4',
-            },
-        };
+        // const input: MessageQueueRequest = {
+        //     queueUrl: QUEUE_TEST,
+        //     messageBody: {
+        //         Message: 'New....',
+        //         prueba: true,
+        //         caller: 'dummy4',
+        //     },
+        // };
 
-        const mensaje: string = await messageQueue.send(input);
-        log('send', mensaje);
+        // const mensaje: string = await messageQueue.send(input);
+        // log('send', mensaje);
 
         response.body = JSON.stringify(rpta);
     } catch (err: any) {
