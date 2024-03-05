@@ -18,6 +18,7 @@ let response: APIGatewayProxyResult = {
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const colegio: string = getColegio(event.headers);
+        const readonly: boolean = process.env.READONLY_DB === 'true';
         log('colegio', colegio);
 
         if (!colegio) {
@@ -34,7 +35,7 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
         const params: CreatePerson = JSON.parse(bodyparams);
         log('params:', params);
 
-        const resp: Response = await createPerson(colegio, params);
+        const resp: Response = await createPerson(colegio, params, readonly);
 
         response.body = JSON.stringify(resp);
     } catch (err: any) {
