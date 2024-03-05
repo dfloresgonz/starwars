@@ -5,7 +5,11 @@ import { CreatePerson } from '../types';
 const text: string =
     'INSERT INTO people (name, birth_year, eye_color, gender, hair_color, skin_color) VALUES ($1,$2,$3,$4,$5,$6)';
 
-export const insertPeople = async (colegio: string, params: CreatePerson): Promise<boolean> => {
+export const insertPeople = async (
+    colegio: string,
+    params: CreatePerson,
+    readonly: boolean,
+): Promise<boolean> => {
     try {
         const query = {
             text,
@@ -19,7 +23,7 @@ export const insertPeople = async (colegio: string, params: CreatePerson): Promi
             ],
         };
 
-        const res = await database.getPool(colegio).query(query);
+        const res = await database.getPool(colegio, readonly).query(query);
         log('insertPeople.rowCount:', res.rowCount);
 
         if (res.rowCount !== 1) return false;
