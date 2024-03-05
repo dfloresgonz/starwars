@@ -62,8 +62,8 @@ jobs:
         run: npm ci
         working-directory: .github/notify
 
-      - name: Install serverless
-        run: npm i -g serverless
+      - name: Install Globals
+        run: npm i -g serverless swagger-cli
 
       - name: ~ Install dependencies ~
         run: npm ci --also=dev
