@@ -1,5 +1,6 @@
 service: starwars-backend-peopletypes
 
+frameworkVersion: "3"
 configValidationMode: error
 
 provider:
@@ -11,7 +12,6 @@ provider:
     role:
       managedPolicies:
         - arn:aws:iam::aws:policy/AWSLambda_FullAccess
-        - arn:aws:iam::aws:policy/SecretsManagerReadWrite
         - arn:aws:iam::aws:policy/AmazonSQSFullAccess
   environment: ${file(../../libs/configs.js)}
 
@@ -23,14 +23,12 @@ package:
 
 plugins:
   - serverless-offline
-  # - serverless-openapi-documentation
   - serverless-esbuild
 
 custom:
   esbuild:
     bundle: true
     minify: true
-  # documentation: ${file(serverless.doc.yml):documentation}
 
 functions:
   listPeople:
@@ -40,6 +38,8 @@ functions:
       - http:
           method: get
           path: api/general/listPeople
+    environment:
+      READONLY_DB: true
     layers:
       - ${cf:layers5-dev.Dependencias5LayerExport}
 

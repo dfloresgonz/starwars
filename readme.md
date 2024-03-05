@@ -54,6 +54,22 @@ SWAPI-->>Backend: Data
 Backend-->>Front: Response
 ```
 
+---
+
+Correr en local los queues, 1x1
+
+requisitos:
+
+- docker
+
+- localstack desktop
+
+```bash
+cd q_email
+serverless deploy --stage local
+```
+---
+
 # Rules
 
 ## Código

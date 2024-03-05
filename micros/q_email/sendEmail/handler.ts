@@ -2,9 +2,9 @@ import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
 
 import { fetchPeopleSWAPI } from './model';
 import { PeopleSwapi } from './types';
-import { database } from '../../../../libs/helpers/database';
-import { handleError } from '../../../../libs/helpers/errors';
-import { log } from '../../../../libs/helpers/log';
+import { database } from '../../../libs/helpers/database';
+import { handleError } from '../../../libs/helpers/errors';
+import { log } from '../../../libs/helpers/log';
 
 let response: APIGatewayProxyResult = {
     statusCode: 200,

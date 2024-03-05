@@ -27,14 +27,16 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
         const query: APIGatewayProxyEventQueryStringParameters = event.queryStringParameters || {};
 
         const colegio: string = getColegio(event.headers);
+        const readonly: boolean = process.env.READONLY_DB === 'true';
 
         const foo: string = query.foo || '';
         const age: string = query.age || '';
 
+        log('READONLY_DB:', process.env.READONLY_DB);
         log('data:', { foo, age });
         log('log...:', 'new');
 
-        const resp: People[] = await getPeoples(colegio);
+        const resp: People[] = await getPeoples(colegio, readonly);
         const suma = 12;
 
         const rpta: Rpta = {
