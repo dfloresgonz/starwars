@@ -1,22 +1,17 @@
-const SPACE = 'AAAApXyNYLA';
-const KEY = 'AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI';
-const TOKEN = 'PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g';
-// let WEBHOOK = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages?key=${KEY}&token=${TOKEN}`;
-// let WEBHOOK_REACT = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages/REEMPLAZAR/reactions?key=${KEY}&token=${TOKEN}`;
+const SPACE = process.env.GCHAT_SPACE; // 'AAAApXyNYLA';
+
 let WEBHOOK = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages`;
 let WEBHOOK_REACT = `https://chat.googleapis.com/v1/spaces/${SPACE}/messages/REEMPLAZAR/reactions`;
-// let WEBHOOK = 'https://chat.googleapis.com/v1/spaces/AAAApXyNYLA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PpIv7cw0okRoMHFP9GTLOfcehZS7RVUqbznrWqhl-7g'
+
 const SUCCESS = '\u2705️';
 const FAILED = '\u274c️';
+const USER_GMAIL = 'diego@smiledu.com';
 
 (async function () {
 
     const args = process.argv;
     const tipo = args[2].split('=')[1]
     console.log('tipo:', tipo);
-
-    // console.log('GAUTH_PRIVATE_KEY:', process.env.GAUTH_PRIVATE_KEY);
-    // console.log('GAUTH_CLIENT_EMAIL:', process.env.GAUTH_CLIENT_EMAIL);
 
     let texto = ``
     let params = {}
@@ -87,7 +82,6 @@ ${texto}
     const fetch = require('node-fetch')
 
     const TOKEN = await getJWT(tipo);
-    // console.log('TOKEN:::', TOKEN);
 
     if (!TOKEN) throw new Error('No se pudo obtener el token de autenticación');
 
@@ -111,7 +105,6 @@ ${texto}
 function getJWT(tipo) {
     return new Promise(async (resolve, reject) => {
         const { google } = require('googleapis');
-        // const gkeys = require('./serv_accnt.json');
         let jwtParams = {
             email: process.env.GAUTH_CLIENT_EMAIL,
             key: process.env.GAUTH_PRIVATE_KEY.replace(/\\n/gm, "\n"),
@@ -122,7 +115,7 @@ function getJWT(tipo) {
                 'https://www.googleapis.com/auth/chat.bot',
             ]);
         } else if (tipo == 'end') {
-            jwtParams.subject = 'diego@smiledu.com';
+            jwtParams.subject = USER_GMAIL;
             jwtParams.scopes = jwtParams.scopes.concat([
                 'https://www.googleapis.com/auth/chat.import',
                 'https://www.googleapis.com/auth/chat.messages',

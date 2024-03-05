@@ -18,6 +18,8 @@ env:
   BD_PASS: ${{ secrets.BD_PASS_TEST }}
   GAUTH_CLIENT_EMAIL: ${{ vars.GAUTH_CLIENT_EMAIL }}
   GAUTH_PRIVATE_KEY: ${{ vars.GAUTH_PRIVATE_KEY }}
+  GCHAT_SPACE: ${{ vars.GCHAT_SPACE_TEST }}
+  BUCKET_SWAGGER: ${{ vars.BUCKET_SWAGGER_TEST }}
 jobs:
   starter:
     runs-on: ubuntu-latest
@@ -37,6 +39,7 @@ jobs:
           touch .env
           echo GAUTH_CLIENT_EMAIL=${{env.GAUTH_CLIENT_EMAIL}} >> .env
           echo GAUTH_PRIVATE_KEY=${{env.GAUTH_PRIVATE_KEY}} >> .env
+          echo GCHAT_SPACE=${{env.GCHAT_SPACE}} >> .env
           node .github/notify/notify.js tipo=init '${{ toJson(github) }}'
       - name: Check DB changes
         id: changesDatabase
@@ -52,7 +55,7 @@ jobs:
     needs: starter
     strategy:
       matrix:
-        micros: [films, people]
+        micros: [films, people, q_email]
     steps:
       - name: ~ Get code ~
         id: GetCode
@@ -91,6 +94,16 @@ jobs:
         id: RunTests
         run: npm test
 
+      - name: ~ Generar openapi json ~
+        id: GenerateOpenApiJson
+        run: swagger-cli bundle -o ${{ matrix.micros }}_doc.json swagger-doc.yml
+        working-directory: ./micros/${{ matrix.micros }}
+
+      - name: ~ Subir openapi json s3 ~
+        id: UploadOpenApiJsonS3
+        run: aws s3 cp ${{ matrix.micros }}_doc.json ${{ env.BUCKET_SWAGGER }}/docs/
+        working-directory: ./micros/${{ matrix.micros }}
+
       - name: ~ Deploy microservice ${{ matrix.micros }} ~
         id: DeployMicro
         run: sls deploy -s ${{ env.DEPLOY_ENV }}
@@ -103,6 +116,7 @@ jobs:
           touch .env
           echo GAUTH_CLIENT_EMAIL=${{env.GAUTH_CLIENT_EMAIL}} >> .env
           echo GAUTH_PRIVATE_KEY=${{env.GAUTH_PRIVATE_KEY}} >> .env
+          echo GCHAT_SPACE=${{env.GCHAT_SPACE}} >> .env
           node .github/notify/notify.js tipo=report "${{ github.job }} > ${{ matrix.micros }}" ${{ job.status }} '${{ toJson(steps) }}' ${{ needs.starter.outputs.gchatthreadid }}
   act_bd:
     runs-on: ubuntu-latest
@@ -128,6 +142,7 @@ jobs:
           touch .env
           echo GAUTH_CLIENT_EMAIL=${{env.GAUTH_CLIENT_EMAIL}} >> .env
           echo GAUTH_PRIVATE_KEY=${{env.GAUTH_PRIVATE_KEY}} >> .env
+          echo GCHAT_SPACE=${{env.GCHAT_SPACE}} >> .env
           node .github/notify/notify.js tipo=report ${{ github.job }} ${{ job.status }} '${{ toJson(steps) }}' ${{ needs.starter.outputs.gchatthreadid }}
   finalizer:
     runs-on: ubuntu-latest
@@ -146,4 +161,5 @@ jobs:
           touch .env
           echo GAUTH_CLIENT_EMAIL=${{env.GAUTH_CLIENT_EMAIL}} >> .env
           echo GAUTH_PRIVATE_KEY=${{env.GAUTH_PRIVATE_KEY}} >> .env
+          echo GCHAT_SPACE=${{env.GCHAT_SPACE}} >> .env
           node .github/notify/notify.js tipo=end ${{ needs.starter.outputs.gchatthreadid }} ${{ contains(needs.*.result, 'failure') }}

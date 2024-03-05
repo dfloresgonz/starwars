@@ -11,6 +11,7 @@ const response: APIGatewayProxyResult = {
     body: '',
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const suma: number = 1;
