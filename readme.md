@@ -1,42 +1,10 @@
-# ¡Bienvenido al proyecto Starwars!
+# Guía de desarrollo
 
-Este es un ejemplo sencillo y muy básico que utiliza el framework Serverless, el patrón de arquitectura de microservicios, base de datos mysql, jest, github actions y AWS.
-
-## Ver videos explicativos
-
--   https://www.loom.com/embed/29e32240f24e4369b96b56d923432363
-
--   https://www.loom.com/embed/8081d62a06f845ca907394854ba4a35f
-
-## Pre-requisitos
-
--   Nodejs
--   MySQL
--   Crear BD llamada starwars
-
-## Instalación
-
-```sh
-npm i
-```
-
-## Crear .env.local dentro de la carpeta utils
-
-```txt
-HOST=<<mysql host>>
-USER=<<usuario mysql>>
-BD=starwars
-```
-
-## Deploy
-
-Solo pusheando a la rama.
-
-Se ejecutará el workflow definido y hará las pruebas y el deploy a aws.
+Esta guía tiene como objetivo plantear buenas prácticas para el desarrollo de funcionalidades en Smiledu
 
 ## Documentación SwaggerUI
 
--   http://example-sw.s3-website-us-east-1.amazonaws.com/index.html
+-   http://swagger-doc-smiledu.s3-website-us-east-1.amazonaws.com/
 
 ## Funcionalidad
 
@@ -99,6 +67,8 @@ serverless deploy --stage local
 1.12 Incluir colegio en los logs
 
 1.13 No se invocaran lambdas directamente, la comunicacion de microservicios se hara por SQS y se debe enviar el caller para indificar quien registro un mensaje en la cola.
+
+1.14 uso ES6
 
 ## Documentación
 
