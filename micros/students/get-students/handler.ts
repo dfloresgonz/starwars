@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
+import { APIGatewayProxyResult, APIGatewayProxyEvent, Context } from 'aws-lambda';
 
 import { getStudents } from './service';
 import { Student } from './types';
@@ -16,8 +16,12 @@ let response: APIGatewayProxyResult = {
 
 let poolEnded = false;
 
-export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const method = async (
+    event: APIGatewayProxyEvent,
+    context: Context,
+): Promise<APIGatewayProxyResult> => {
     try {
+        context.callbackWaitsForEmptyEventLoop = false;
         const resp: Student[] = await getStudents();
 
         response.body = JSON.stringify(resp);
