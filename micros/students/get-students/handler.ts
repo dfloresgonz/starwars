@@ -14,8 +14,6 @@ let response: APIGatewayProxyResult = {
     body: '',
 };
 
-let poolEnded = false;
-
 export const method = async (
     event: APIGatewayProxyEvent,
     context: Context,
@@ -27,11 +25,6 @@ export const method = async (
         response.body = JSON.stringify(resp);
     } catch (err: any) {
         response = { ...handleError(err) };
-    } finally {
-        if (!poolEnded) {
-            await database.endPool();
-            poolEnded = true;
-        }
     }
     return response;
 };
