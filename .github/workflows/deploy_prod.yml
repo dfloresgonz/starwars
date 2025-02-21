@@ -51,7 +51,7 @@ jobs:
     needs: starter
     strategy:
       matrix:
-        micros: [films, people]
+        micros: [students]
     steps:
 
       - name: ~ Get code ~

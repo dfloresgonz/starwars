@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  title: Smiledu Student Management API
+  version: '1.0'
+  description: API for managing student information in the Smiledu platform
+
+servers:
+  - url: https://{apiId}.execute-api.us-east-1.amazonaws.com/{stage}
+    variables:
+      apiId:
+        default: your-api-id
+        description: API Gateway ID
+      stage:
+        default: test
+        description: Deployment stage
+
+paths:
+  /api/v1/students:
+    get:
+      summary: List all students
+      operationId: listStudents
+      tags:
+        - Students
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    
+    post:
+      summary: Create a new student
+      operationId: createStudent
+      tags:
+        - Students
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentInput'
+      responses:
+        '201':
+          description: Student created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    
+    put:
+      summary: Update an existing student
+      operationId: updateStudent
+      tags:
+        - Students
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentUpdate'
+      responses:
+        '200':
+          description: Student updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Student not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Student:
+      type: object
+      required:
+        - id
+        - name
+        - lastname
+        - age
+        - grade
+        - email
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the student
+        name:
+          type: string
+          description: Student's first name
+        lastname:
+          type: string
+          description: Student's last name
+        age:
+          type: integer
+          minimum: 0
+          description: Student's age
+        grade:
+          type: string
+          description: Student's grade level
+        picture:
+          type: string
+          description: URL to student's picture
+        email:
+          type: string
+          format: email
+          description: Student's email address
+
+    StudentInput:
+      type: object
+      required:
+        - name
+        - lastname
+        - age
+        - grade
+        - email
+      properties:
+        name:
+          type: string
+        lastname:
+          type: string
+        age:
+          type: integer
+          minimum: 0
+        grade:
+          type: string
+        picture:
+          type: string
+        email:
+          type: string
+          format: email
+
+    StudentUpdate:
+      allOf:
+        - $ref: '#/components/schemas/StudentInput'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: integer
+              format: int64
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message

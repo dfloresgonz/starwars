@@ -11,7 +11,6 @@ import { MessageQueueRequest } from '../../../libs/factories/Messages/MessageQue
 import { MessagesQueueBuilder } from '../../../libs/factories/Messages/MessagesQueueBuilder';
 import { database } from '../../../libs/helpers/database';
 import { handleError } from '../../../libs/helpers/errors';
-import { getColegio } from '../../../libs/helpers/getColegio';
 import { log } from '../../../libs/helpers/log';
 
 let response: APIGatewayProxyResult = {
@@ -26,7 +25,6 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
     try {
         const query: APIGatewayProxyEventQueryStringParameters = event.queryStringParameters || {};
 
-        const colegio: string = getColegio(event.headers);
         const readonly: boolean = process.env.READONLY_DB === 'true';
 
         const foo: string = query.foo || '';
@@ -37,7 +35,7 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
         log('data:', { foo, age });
         log('log...:', 'new');
 
-        const resp: People[] = await getPeoples(colegio, readonly);
+        const resp: People[] = await getPeoples();
         const suma = 12;
 
         const rpta: Rpta = {

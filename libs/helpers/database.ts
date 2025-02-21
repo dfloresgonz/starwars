@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 
-import { HOST_BD, USER_BD, BD_PASS, BD_PORT, HOST_BD_READONLY } from '../environment/utilities';
+import { HOST_BD, USER_BD, BD_PASS, BD_PORT } from '../environment/utilities';
 
 export class database {
     private static pool: Pool;
@@ -8,15 +8,15 @@ export class database {
     static config: any = {
         user: USER_BD,
         host: HOST_BD,
-        // database: BD_NAME,
+        database: 'starwars',
         password: BD_PASS,
         port: BD_PORT,
     };
 
-    public static getPool(colegio: string, readonly: boolean): Pool {
+    public static getPool(): Pool {
         if (!this.pool) {
-            this.config.database = colegio;
-            this.config.host = readonly ? HOST_BD_READONLY : HOST_BD;
+            // this.config.database = colegio;
+            // this.config.host = readonly ? HOST_BD_READONLY : HOST_BD;
             this.pool = new Pool(this.config);
         }
         return this.pool;

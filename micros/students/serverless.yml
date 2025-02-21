@@ -1,0 +1,63 @@
+service: project-cloud-smiledu-backend-students
+
+frameworkVersion: "3"
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'test'}
+  region: us-east-1
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+  environment: ${file(../../libs/configs.js)}
+
+package:
+  individually: true
+  patterns:
+    - '!node_modules/**'
+    - '!./**'
+
+plugins:
+  - serverless-offline
+  - serverless-esbuild
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+
+functions:
+  listStudents:
+    handler: get-students/handler.method
+    timeout: 8
+    events:
+      - http:
+          method: get
+          path: api/v1/students
+    environment:
+      READONLY_DB: true
+    layers:
+      - ${cf:layers5-dev.Dependencias5LayerExport}
+
+  # createStudent:
+  #   handler: create-student/handler.method
+  #   timeout: 8
+  #   events:
+  #     - http:
+  #         method: post
+  #         path: api/v1/students
+  #   layers:
+  #     - ${cf:layers5-dev.Dependencias5LayerExport}
+
+  # updateStudent:
+  #   handler: update-student/handler.method
+  #   timeout: 8
+  #   events:
+  #     - http:
+  #         method: put
+  #         path: api/v1/students
+  #   layers:
+  #     - ${cf:layers5-dev.Dependencias5LayerExport}
