@@ -14,6 +14,8 @@ let response: APIGatewayProxyResult = {
     body: '',
 };
 
+let poolEnded = false;
+
 export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const resp: Student[] = await getStudents();
@@ -22,7 +24,10 @@ export const method = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
     } catch (err: any) {
         response = { ...handleError(err) };
     } finally {
-        await database.endPool();
+        if (!poolEnded) {
+            await database.endPool();
+            poolEnded = true;
+        }
     }
     return response;
 };
