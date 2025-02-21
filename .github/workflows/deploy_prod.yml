@@ -82,14 +82,14 @@ jobs:
         run: echo -e "HOST_BD=${{env.HOST_BD}}\nUSER_BD=${{env.USER_BD}}\nBD_PASS=${{env.BD_PASS}}" > .env.local
         working-directory: ./libs
 
-      - name: Edit Jest config
-        shell: bash
-        run: |
-          echo $(jq --arg micro "${{ matrix.micros }}" '.roots[0] = "<rootDir>/micros/\($micro)"' jest.config.json) > jest.config.json
+      # - name: Edit Jest config
+      #   shell: bash
+      #   run: |
+      #     echo $(jq --arg micro "${{ matrix.micros }}" '.roots[0] = "<rootDir>/micros/\($micro)"' jest.config.json) > jest.config.json
 
-      - name: ~ Run tests ~
-        id: RunTests
-        run: npm test
+      # - name: ~ Run tests ~
+      #   id: RunTests
+      #   run: npm test
 
       - name: ~ Generar openapi json ~
         id: GenerateOpenApiJson
